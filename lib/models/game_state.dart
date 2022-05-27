@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:latlong2/latlong.dart';
 
-enum Shape {
+enum ShapeType {
   triangle,
   square,
   circle;
@@ -21,11 +21,11 @@ enum Shape {
   }
 }
 
-class Poi {
-  late Shape shape;
+class ShapePoint {
+  late ShapeType shape;
   late LatLng pos;
 
-  Poi({required this.shape, required this.pos});
+  ShapePoint({required this.shape, required this.pos});
 }
 
 /// The shape distance in which the player has to be in
@@ -39,12 +39,17 @@ const collectTime = Duration(seconds: 10);
 class GameState extends ChangeNotifier {
   DateTime? _gameStart;
   DateTime? _gameEnd;
-  late List<Poi> _shapesToCollect;
 
-  /// When did player reach in range of closest poi?
-  DateTime? _enterShape;
+  /// Shape collect order
+  late List<ShapeType> _shapes;
+
+  /// List of points that each has a ShapeType
+  late List<ShapePoint> _points;
+
+  /// When did player reach in range of closest point?
+  DateTime? _enterPoint;
   LatLng? _playerPos;
-  _ClosestPoiDist? _closestPoi;
+  _ClosestPointDist? _closestPoint;
 
   GameState() {
     clear();
@@ -53,8 +58,11 @@ class GameState extends ChangeNotifier {
   void clear() {
     _gameStart = null;
     _gameEnd = null;
-    _shapesToCollect = [];
-    _enterShape = null;
+    _points = [];
+    _shapes = [];
+    _enterPoint = null;
+    _playerPos = null;
+    _closestPoint = null;
   }
 
   /// Create a new game
@@ -67,8 +75,9 @@ class GameState extends ChangeNotifier {
 
     _gameStart = DateTime.now();
 
-    List<Shape> shapes = [];
-    shapes.addAll(Shape.values);
+    List<ShapeType> shapes = [];
+    shapes.addAll(ShapeType.values);
+    // Shuffle the order of shapes in points
     shapes.shuffle();
 
     var bearing = -180.0;
@@ -78,43 +87,49 @@ class GameState extends ChangeNotifier {
           ((maxRangeM - minRangeM) > 0
               ? Random().nextInt(maxRangeM - minRangeM)
               : 0);
-      var pos = const Distance().offset(center, range, bearing);
-      _shapesToCollect.add(Poi(
+      final pos = const Distance().offset(center, range, bearing);
+      final shape = shapes[i % shapes.length];
+      _points.add(ShapePoint(
         shape: shapes[i % shapes.length],
         pos: pos,
       ));
+      _shapes.add(shape);
 
       bearing += 360 / n;
     }
 
-    _shapesToCollect.shuffle();
+    // Shuffle collect order
+    _shapes.shuffle();
 
     notifyListeners();
   }
 
-  /// List of all shapes to collect
-  List<Poi> get shapesToCollect => _shapesToCollect;
+  /// List of all points to collect
+  List<ShapePoint> get points => _points;
+
+  /// List giving ShapeType to collect order
+  List<ShapeType> get shapesToCollect => _shapes;
 
   /// Distance in meters to next shape
-  double? get closestShapeDistanceM => _closestPoi?.distM;
+  double? get closestShapeDistanceM => _closestPoint?.distM;
 
   /// Index in shapesToCollect to the closest
-  /// POI of desired shape
-  int? get closestShapeIndex => _closestPoi?.index;
+  /// point of desired ShapeType
+  int? get closestShapeIndex => _closestPoint?.index;
 
   /// Non-null with the time when timer
   /// to collect a shape started. When
   /// time has eslapted to collectStartTime
   /// + collectTime duration, the shape
   /// will be collected.
-  DateTime? get collectStartTime => _enterShape;
+  DateTime? get collectStartTime => _enterPoint;
 
   /// Get current player position
   LatLng? get playerPos => _playerPos;
 
   /// Is player currently in range of a shape?
   /// (awaiting for the collect time to be reached)
-  bool get inRange => _enterShape != null;
+  bool get inRange => _enterPoint != null;
 
   Duration? get gameDuration => _gameStart == null
       ? null
@@ -127,32 +142,32 @@ class GameState extends ChangeNotifier {
     var notify = _playerPos != pos;
     _playerPos = pos;
 
-    if (_shapesToCollect.isNotEmpty) {
-      final closestPoi =
-          _closestShapeIndex(_playerPos!, _shapesToCollect[0].shape);
-      assert(closestPoi.index != -1);
-      if (_closestPoi == null ||
-          closestPoi.distM != _closestPoi!.distM ||
-          closestPoi.index != _closestPoi!.index) {
-        _closestPoi = closestPoi;
+    if (_points.isNotEmpty) {
+      final closestPoint =
+          _findClosestPoint(_playerPos!, _points[0].shape);
+      assert(closestPoint.index != -1);
+      if (_closestPoint == null ||
+          closestPoint.distM != _closestPoint!.distM ||
+          closestPoint.index != _closestPoint!.index) {
+        _closestPoint = closestPoint;
         notify = true;
       }
       var inRange =
-          _playerPos != null ? closestPoi.distM < collectRangeMeters : false;
+          _playerPos != null ? closestPoint.distM < collectRangeMeters : false;
       var now = DateTime.now();
       if (inRange &&
-          _enterShape != null &&
-          now.difference(_enterShape!) > collectTime) {
+          _enterPoint != null &&
+          now.difference(_enterPoint!) > collectTime) {
         // Stayed in range for at leat COLLECT_TIME => collect shape
-        _collectIndex(closestPoi.index);
+        _collectIndex(closestPoint.index);
         notify = true;
-      } else if (inRange && _enterShape == null) {
+      } else if (inRange && _enterPoint == null) {
         // Arrived in range => set enter time
-        _enterShape = now;
+        _enterPoint = now;
         notify = true;
-      } else if (!inRange && _enterShape != null) {
+      } else if (!inRange && _enterPoint != null) {
         // Went out of range => reset enter time
-        _enterShape = null;
+        _enterPoint = null;
         notify = true;
       }
     }
@@ -160,33 +175,34 @@ class GameState extends ChangeNotifier {
     if (notify) notifyListeners();
   }
 
-  /// Skip a shape - removes it from shapesToCollect
+  /// Skip a point
   void skip(int index) {
     _collectIndex(index);
     notifyListeners();
   }
 
-  /// Collect the shape at given index
+  /// Collect the point at given index in _points
   void _collectIndex(int index) {
-    _shapesToCollect.removeAt(index);
-    _enterShape = null;
-    _closestPoi = null;
-    if (_shapesToCollect.isEmpty) {
+    _shapes.remove(_points[index].shape);
+    _points.removeAt(index);
+    _enterPoint = null;
+    _closestPoint = null;
+    if (_points.isEmpty) {
       _gameEnd = DateTime.now();
     }
   }
 
-  /// Get the closest poi of give shape
-  /// @return -1 or index in _shapesToCollect
-  _ClosestPoiDist _closestShapeIndex(LatLng pos, Shape shape) {
+  /// Get the closest point of give shape
+  /// @return -1 or index in _points
+  _ClosestPointDist _findClosestPoint(LatLng pos, ShapeType shape) {
     const d = Distance();
     var minDist = double.maxFinite;
     int closestIndex = -1;
 
-    for (var i = 0; i < _shapesToCollect.length; i++) {
-      final poi = _shapesToCollect[i];
-      if (poi.shape == shape) {
-        final dist = d.as(LengthUnit.Meter, pos, poi.pos);
+    for (var i = 0; i < _points.length; i++) {
+      final point = _points[i];
+      if (point.shape == shape) {
+        final dist = d.as(LengthUnit.Meter, pos, point.pos);
         if (dist < minDist) {
           minDist = dist;
           closestIndex = i;
@@ -194,13 +210,13 @@ class GameState extends ChangeNotifier {
       }
     }
 
-    return _ClosestPoiDist(closestIndex, minDist);
+    return _ClosestPointDist(closestIndex, minDist);
   }
 }
 
-class _ClosestPoiDist {
+class _ClosestPointDist {
   late int index;
   late double distM;
 
-  _ClosestPoiDist(this.index, this.distM);
+  _ClosestPointDist(this.index, this.distM);
 }

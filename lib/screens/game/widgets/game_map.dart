@@ -68,11 +68,11 @@ class _GameMapState extends State<GameMap> {
               return MarkerLayerWidget(
                 options: MarkerLayerOptions(
                   key: ValueKey<String>(
-                      '${state.playerPos} ${state.shapesToCollect.length}'),
+                      '${state.playerPos} ${state.points.length}'),
                   markers: [
                     if (state.playerPos != null) playerMarker(state.playerPos!),
-                    for (var i = 0; i < state.shapesToCollect.length; i++)
-                      shapeMarker(state.shapesToCollect[i], i),
+                    for (var i = 0; i < state.points.length; i++)
+                      shapeMarker(state.points[i], i),
                   ],
                 ),
               );
@@ -83,13 +83,13 @@ class _GameMapState extends State<GameMap> {
     );
   }
 
-  Marker shapeMarker(Poi poi, int index) {
+  Marker shapeMarker(ShapePoint point, int index) {
     // Need to be quite large for TextButton to have content fully centered.
     const size = 60.0;
     return Marker(
       width: size,
       height: size,
-      point: poi.pos,
+      point: point.pos,
       builder: (context) => ShapeMarkerWidget(index, size),
     );
   }

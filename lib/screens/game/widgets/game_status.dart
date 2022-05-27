@@ -30,7 +30,7 @@ class GameStatus extends StatelessWidget {
         builder: (context, state, child) {
           final endOfGame = state.shapesToCollect.isEmpty;
           final collectStr = state.shapesToCollect
-                            .map((poi) => poi.shape.toUnicodeShape())
+                            .map((shape) => shape.toUnicodeShape())
                             .toList()
                             .join(', ');
           return Column(

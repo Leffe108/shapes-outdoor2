@@ -4,10 +4,9 @@ import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
 
 class ShapeMarkerWidget extends StatelessWidget {
+  /// index in GameState.points
   final int index;
   final double size;
-
-  /// index in GameState.shapesToCollect
 
   const ShapeMarkerWidget(this.index, this.size, {Key? key}) : super(key: key);
 
@@ -16,8 +15,8 @@ class ShapeMarkerWidget extends StatelessWidget {
     final theme = Theme.of(context);
     return Consumer<GameState>(
       builder: (context, state, child) {
-        final nextShape = state.shapesToCollect[0].shape;
-        final shape = state.shapesToCollect[index].shape;
+        final nextShape = state.shapesToCollect[0];
+        final shape = state.points[index].shape;
         final closest = state.closestShapeIndex == index;
         final inRange =
             closest && state.closestShapeDistanceM! < collectRangeMeters;
