@@ -37,6 +37,8 @@ const collectRangeMeters = 50;
 const collectTime = Duration(seconds: 10);
 
 class GameState extends ChangeNotifier {
+  DateTime? _gameStart;
+  DateTime? _gameEnd;
   late List<Poi> _shapesToCollect;
 
   /// When did player reach in range of closest poi?
@@ -49,6 +51,8 @@ class GameState extends ChangeNotifier {
   }
 
   void clear() {
+    _gameStart = null;
+    _gameEnd = null;
     _shapesToCollect = [];
     _enterShape = null;
   }
@@ -56,6 +60,8 @@ class GameState extends ChangeNotifier {
   /// Create a new game
   void newGame(int n, LatLng center) {
     clear();
+
+    _gameStart = DateTime.now();
 
     List<Shape> shapes = [];
     shapes.addAll(Shape.values);
@@ -102,6 +108,12 @@ class GameState extends ChangeNotifier {
   /// (awaiting for the collect time to be reached)
   bool get inRange => _enterShape != null;
 
+  Duration? get gameDuration => _gameStart == null
+      ? null
+      : (_gameEnd == null
+          ? DateTime.now().difference(_gameStart!)
+          : _gameEnd!.difference(_gameStart!));
+
   /// Set the current location of the player
   set playerPos(LatLng? pos) {
     var notify = _playerPos != pos;
@@ -124,9 +136,7 @@ class GameState extends ChangeNotifier {
           _enterShape != null &&
           now.difference(_enterShape!) > collectTime) {
         // Stayed in range for at leat COLLECT_TIME => collect shape
-        _shapesToCollect.removeAt(closestPoi.index);
-        _enterShape = null;
-        _closestPoi = null;
+        _collectIndex(closestPoi.index);
         notify = true;
       } else if (inRange && _enterShape == null) {
         // Arrived in range => set enter time
@@ -140,6 +150,22 @@ class GameState extends ChangeNotifier {
     }
 
     if (notify) notifyListeners();
+  }
+
+  /// Skip a shape - removes it from shapesToCollect
+  void skip(int index) {
+    _collectIndex(index);
+    notifyListeners();
+  }
+
+  /// Collect the shape at given index
+  void _collectIndex(int index) {
+    _shapesToCollect.removeAt(index);
+    _enterShape = null;
+    _closestPoi = null;
+    if (_shapesToCollect.isEmpty) {
+      _gameEnd = DateTime.now();
+    }
   }
 
   /// Get the closest poi of give shape

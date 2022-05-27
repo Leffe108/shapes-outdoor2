@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
 import 'package:shapes_outdoor/screens/game/widgets/collect_progress_indicator.dart';
+import 'package:shapes_outdoor/utils/format.dart';
 
 class GameStatus extends StatelessWidget {
   const GameStatus({Key? key}) : super(key: key);
@@ -25,44 +26,51 @@ class GameStatus extends StatelessWidget {
         ],
       ),
       padding: const EdgeInsets.all(10),
-      child: Column(
-        children: [
-          const CollectProgressIndicator(),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
+      child: Consumer<GameState>(
+        builder: (context, state, child) {
+          final endOfGame = state.shapesToCollect.isEmpty;
+          return Column(
             children: [
-              const Text('Collect: '),
-              Expanded(
-                child: Consumer<GameState>(
-                  builder: ((context, state, child) {
-                    return Text(state.shapesToCollect
-                        .map((poi) => poi.shape.toString().split('.')[1])
-                        .toList()
-                        .join(', '));
-                  }),
+              const CollectProgressIndicator(key: Key('collect-progress')),
+              if (!endOfGame)
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Collect: '),
+                    Expanded(
+                      child: Text(
+                        state.shapesToCollect
+                            .map((poi) => poi.shape.toString().split('.')[1])
+                            .toList()
+                            .join(', '),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
-          ),
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text('Distance: '),
-              Expanded(
-                child: Consumer<GameState>(
-                  builder: ((context, state, child) {
-                    if (state.closestShapeDistanceM == null) {
-                      return const Text('-');
-                    }
-                    return Text('${state.closestShapeDistanceM!.round()} m');
-                  }),
+              if (!endOfGame)
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text('Distance: '),
+                    Expanded(
+                      child: state.closestShapeDistanceM == null
+                          ? const Text('-')
+                          : Text('${state.closestShapeDistanceM!.round()} m'),
+                    ),
+                  ],
                 ),
-              ),
+              if (endOfGame)
+                SizedBox(
+                  width: double.infinity,
+                  child: Text(
+                    'Victory!\n\nYou have collected all shapes${state.gameDuration != null ? ' in ' + humanDuration(state.gameDuration!) : ''}.',
+                  ),
+                ),
             ],
-          ),
-        ],
+          );
+        },
       ),
     );
   }

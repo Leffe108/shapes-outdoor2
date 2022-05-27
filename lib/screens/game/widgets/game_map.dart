@@ -84,11 +84,13 @@ class _GameMapState extends State<GameMap> {
   }
 
   Marker shapeMarker(Poi poi, int index) {
+    // Need to be quite large for TextButton to have content fully centered.
+    const size = 60.0;
     return Marker(
-      width: 20.0,
-      height: 20.0,
+      width: size,
+      height: size,
       point: poi.pos,
-      builder: (context) => ShapeMarkerWidget(index),
+      builder: (context) => ShapeMarkerWidget(index, size),
     );
   }
 

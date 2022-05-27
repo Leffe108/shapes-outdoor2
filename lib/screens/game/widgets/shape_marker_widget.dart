@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
 
 class ShapeMarkerWidget extends StatelessWidget {
-  final int index; /// index in GameState.shapesToCollect
+  final int index;
+  final double size;
 
-  const ShapeMarkerWidget(this.index, {Key? key}) : super(key: key);
+  /// index in GameState.shapesToCollect
+
+  const ShapeMarkerWidget(this.index, this.size, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +18,53 @@ class ShapeMarkerWidget extends StatelessWidget {
       builder: (context, state, child) {
         final shape = state.shapesToCollect[index].shape;
         final closest = state.closestShapeIndex == index;
-        final inRange = closest && state.closestShapeDistanceM! < collectRangeMeters;
-        final color =  inRange ? theme.colorScheme.primary : theme.colorScheme.secondary;
+        final inRange =
+            closest && state.closestShapeDistanceM! < collectRangeMeters;
+        final color =
+            inRange ? theme.colorScheme.primary : theme.colorScheme.secondary;
         return Center(
           key: ValueKey<Color>(color),
-          child: Text(shape.toUnicodeShape(), style: TextStyle(color: color, fontSize: 20),),
+          child: TextButton(
+            style: TextButton.styleFrom(
+              minimumSize: Size(size, size),
+              maximumSize: Size(size, size),
+              primary: color,
+              shape: CircleBorder(),
+            ),
+            child: Text(
+              shape.toUnicodeShape(),
+              style: TextStyle(color: color, fontSize: 20),
+            ),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Out of reach?'),
+                  content: const Text(
+                      'If a shape is not reachable, you can skip it.\n\nShould this shape be skipped?'),
+                  actions: [
+                    TextButton(
+                      child: const Text('Yes'),
+                      onPressed: () {
+                        final state =
+                            Provider.of<GameState>(context, listen: false);
+                        state.skip(index);
+                        Routemaster.of(context).pop();
+                      },
+                    ),
+                    TextButton(
+                      child: const Text('No'),
+                      onPressed: () {
+                        Routemaster.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
         );
-      }
+      },
     );
   }
 }
