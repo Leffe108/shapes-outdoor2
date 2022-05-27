@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
 import 'package:shapes_outdoor/screens/new_game/widgets/new_game_button.dart';
-import 'package:turf/helpers.dart';
 
 import 'game_menu_button.dart';
 
@@ -18,12 +15,6 @@ class GameMenu extends StatefulWidget {
 
 class _GameMenuState extends State<GameMenu> {
   bool _showResume = false;
-
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
 
   @override
   void didChangeDependencies() {
