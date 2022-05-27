@@ -23,11 +23,12 @@ class _LocationWatcherState extends State<LocationWatcher> {
   @override
   void initState() {
     _stream = watchPosition();
-    _streamSubscription = _stream.listen((pos) { 
-      print('new position: ${pos.latitude}, ${pos.longitude}');
-      final state = Provider.of<GameState>(context, listen: false);
-      if (pos.latitude != null && pos.longitude != null) {
-        state.playerPos = LatLng(pos.latitude!, pos.longitude!);
+    _streamSubscription = _stream.listen((location) { 
+      print('new position: ${location.latitude}, ${location.longitude}');
+      final pos = location.toLatLng();
+      if (pos != null) {
+        final state = Provider.of<GameState>(context, listen: false);
+        state.setPlayerPos(pos, location.heading);
       }
     });
     super.initState();

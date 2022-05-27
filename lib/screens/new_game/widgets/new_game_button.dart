@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
@@ -28,9 +29,12 @@ class _NewGameButtonState extends State<NewGameButton> {
       onPressed: () async {
         var state = Provider.of<GameState>(context, listen: false);
 
+        LocationData? location;
         LatLng? pos;
         try {
-          pos = await getUserPosition();
+          location = await getUserPosition();
+          pos = location.toLatLng();
+          if (pos == null) throw LocationDataError('');
         } catch (e) {
           if (!mounted) return;
           if (e is PermissionError) {
@@ -55,7 +59,7 @@ class _NewGameButtonState extends State<NewGameButton> {
         }
 
         state.newGame(pos, widget.n, widget.minRangeM, widget.maxRangeM);
-        state.playerPos = pos;
+        state.setPlayerPos(pos, location.heading);
         if (!mounted) return;
         Routemaster.of(context).push('/game');
       },

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
@@ -46,6 +47,7 @@ class _GameMapState extends State<GameMap> {
       ),
       child: FlutterMap(
         options: MapOptions(
+          interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
           controller: controller,
           onMapCreated: (c) {
             controller = c;
@@ -56,10 +58,20 @@ class _GameMapState extends State<GameMap> {
         children: [
           TileLayerWidget(
             options: TileLayerOptions(
-              urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+              urlTemplate: dotenv.env['MAP_URL'],
               subdomains: ['a', 'b', 'c'],
               attributionBuilder: (_) {
-                return const Text("© OpenStreetMap contributors");
+                return Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.4),
+                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(8.0)),
+                  ),
+                  padding: const EdgeInsets.all(4.0),
+                  child: const Text(
+                    "© MapTiler, © OpenStreetMap contributors",
+                    style: TextStyle(fontSize: 10.0),
+                  ),
+                );
               },
             ),
           ),
@@ -96,8 +108,8 @@ class _GameMapState extends State<GameMap> {
 
   Marker playerMarker(LatLng playerPos) {
     return Marker(
-      width: 12.0,
-      height: 12.0,
+      width: 14.0,
+      height: 14.0,
       point: playerPos,
       builder: (context) => const PlayerMarkerWidget(),
     );

@@ -1,4 +1,6 @@
 
+// ignore_for_file: unnecessary_this
+
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
@@ -23,7 +25,7 @@ class LocationDataError extends Exception {
   }
 }
 
-Future<LatLng> getUserPosition() async {
+Future<LocationData> getUserPosition() async {
   final l = Location.instance;
   final status = await l.requestPermission();
   if (status != PermissionStatus.granted) {
@@ -42,7 +44,7 @@ Future<LatLng> getUserPosition() async {
     throw LocationDataError('getLocation exception: $e');
   }
   if (pos.latitude != null && pos.longitude != null) {
-    return LatLng(pos.latitude!, pos.longitude!);
+    return pos;
   }
 
   throw LocationDataError('null lat/lon');
@@ -51,4 +53,14 @@ Future<LatLng> getUserPosition() async {
 Stream<LocationData> watchPosition() {
   final l = Location.instance;
   return l.onLocationChanged;
+}
+
+extension LocationDataToLatLng on LocationData
+{
+  LatLng? toLatLng() {
+    if (this.latitude != null && this.longitude != null) {
+      return LatLng(latitude!, longitude!);
+    }
+    return null;
+  }
 }

@@ -50,6 +50,7 @@ class GameState extends ChangeNotifier {
   /// When did player reach in range of closest point?
   DateTime? _enterPoint;
   LatLng? _playerPos;
+  double? _playerHeading;
   _ClosestPointDist? _closestPoint;
 
   GameState() {
@@ -133,6 +134,7 @@ class GameState extends ChangeNotifier {
 
   /// Get current player position
   LatLng? get playerPos => _playerPos;
+  double? get playerHeading => _playerHeading;
 
   /// Is player currently in range of a shape?
   /// (awaiting for the collect time to be reached)
@@ -145,9 +147,11 @@ class GameState extends ChangeNotifier {
           : _gameEnd!.difference(_gameStart!));
 
   /// Set the current location of the player
-  set playerPos(LatLng? pos) {
+  setPlayerPos(LatLng? pos, double? heading) {
     var notify = _playerPos != pos;
     _playerPos = pos;
+    _playerHeading = heading;
+    print('heading: $heading');
 
     if (_points.isNotEmpty) {
       final closestPoint =

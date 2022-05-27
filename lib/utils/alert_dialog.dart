@@ -22,8 +22,7 @@ Future<void> showAlert(BuildContext context, Widget title, Widget message) {
 /// user press Yes button, otherwise false.
 Future<bool> showYesNoDialog(
     BuildContext context, Widget title, Widget message) async {
-  var result = false;
-  await showDialog(
+  final result = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
       title: title,
@@ -32,18 +31,17 @@ Future<bool> showYesNoDialog(
         TextButton(
           child: const Text('Yes'),
           onPressed: () {
-            result = true;
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(true);
           },
         ),
         TextButton(
           child: const Text('No'),
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop(false);
           },
         ),
       ],
     ),
   );
-  return result;
+  return result == true;
 }

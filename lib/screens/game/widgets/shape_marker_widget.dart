@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
 import 'package:shapes_outdoor/utils/alert_dialog.dart';
 
@@ -24,7 +23,7 @@ class ShapeMarkerWidget extends StatelessWidget {
         final color = inRange
             ? theme.colorScheme.primary
             : (shape == nextShape
-                ? theme.colorScheme.secondary
+                ? theme.colorScheme.primary
                 : Colors.grey[600]!);
 
         final textWidget = Text(
@@ -50,8 +49,8 @@ class ShapeMarkerWidget extends StatelessWidget {
                   onPressed: () async {
                     final skip = await showYesNoDialog(
                         context,
-                        Text('Out of reach?'),
-                        Text(
+                        const Text('Out of reach?'),
+                        const Text(
                             'If a shape is not reachable, you can skip it.\n\nShould this shape be skipped?'));
                     if (skip) {
                       final state =

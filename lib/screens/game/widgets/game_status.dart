@@ -44,7 +44,7 @@ class GameStatus extends StatelessWidget {
                     const Text('Collect: '),
                     Expanded(
                       child: Text.rich(TextSpan(children: [
-                        TextSpan(text: collectStr.substring(0, 1), style: TextStyle(color: Theme.of(context).colorScheme.secondary)),
+                        TextSpan(text: collectStr.substring(0, 1), style: TextStyle(color: Theme.of(context).colorScheme.primary)),
                         TextSpan(text: collectStr.substring(1)),
                       ])),
                     ),

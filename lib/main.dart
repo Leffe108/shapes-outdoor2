@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
 import 'package:shapes_outdoor/screens/game/game_screen.dart';
 import 'package:shapes_outdoor/screens/new_game/new_game_screen.dart';
 
-void main() {
+void main() async {
+  await dotenv.load(fileName: ".env");
   runApp(const MyApp());
 }
 
@@ -22,9 +24,9 @@ class MyApp extends StatelessWidget {
         title: 'Flutter Demo',
         theme: ThemeData(
           colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: Colors.teal,
-            backgroundColor: Colors.teal[100],
-            accentColor: Colors.green[600],
+            primarySwatch: Colors.green,
+            backgroundColor: Colors.green[100],
+            accentColor: Colors.blue[600],
           ),
         ),
         routerDelegate: RoutemasterDelegate(
