@@ -8,14 +8,17 @@ class NewGameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('New game')),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            NewGameButton(Text('Easy game'), 5),
-            SizedBox(height: 20,),
-            NewGameButton(Text('Hard game'), 15),
-          ],
+      body: Container(
+        color: Theme.of(context).colorScheme.background,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              NewGameButton(Text('Easy game'), 5),
+              SizedBox(height: 20,),
+              NewGameButton(Text('Hard game'), 15),
+            ],
+          ),
         ),
       ),
     );

@@ -8,8 +8,10 @@ class ShapeMarkerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final color = theme.colorScheme.secondary;
     return Center(
-      child: Text(shape.toUnicodeShape(), style: const TextStyle(color: Colors.red, fontSize: 20),),
+      child: Text(shape.toUnicodeShape(), style: TextStyle(color: color, fontSize: 20),),
     );
   }
 }

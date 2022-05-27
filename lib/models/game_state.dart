@@ -8,7 +8,6 @@ enum Shape {
   square,
   circle;
 
-  @override
   String toUnicodeShape() {
     switch (name) {
       case 'triangle':
@@ -35,7 +34,7 @@ const collectRangeMeters = 50;
 
 /// The duration that a player has to stay in range to collect
 /// a shape.
-const collectTime = Duration(seconds: 15);
+const collectTime = Duration(seconds: 10);
 
 class GameState extends ChangeNotifier {
   late List<Poi> _shapesToCollect;
@@ -82,6 +81,13 @@ class GameState extends ChangeNotifier {
 
   /// Distance in meters to next shape
   double? get distanceMToNextShape => _distanceM;
+
+  /// Non-null with the time when timer
+  /// to collect a shape started. When
+  /// time has eslapted to collectStartTime
+  /// + collectTime duration, the shape
+  /// will be collected. 
+  DateTime? get collectStartTime => _enterShape;
 
   /// Get current player position
   LatLng? get playerPos => _playerPos;

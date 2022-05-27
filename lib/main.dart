@@ -21,7 +21,11 @@ class MyApp extends StatelessWidget {
       child: MaterialApp.router(
         title: 'Flutter Demo',
         theme: ThemeData(
-          primarySwatch: Colors.blue,
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.teal,
+            backgroundColor: Colors.teal[100],
+            accentColor: Colors.deepOrange[500],
+          ),
         ),
         routerDelegate: RoutemasterDelegate(
           routesBuilder: (context) => RouteMap(routes: {
