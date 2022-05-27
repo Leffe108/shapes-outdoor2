@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:shapes_outdoor/utils/vibrate.dart';
 
 enum ShapeType {
   triangle,
@@ -196,6 +197,8 @@ class GameState extends ChangeNotifier {
     if (_points.isEmpty) {
       _gameEnd = DateTime.now();
     }
+
+    vibrate();
   }
 
   /// Get the closest point of give shape
