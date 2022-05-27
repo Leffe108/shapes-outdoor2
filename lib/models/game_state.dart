@@ -38,6 +38,8 @@ const collectTime = Duration(seconds: 10);
 
 class GameState extends ChangeNotifier {
   late List<Poi> _shapesToCollect;
+
+  /// When did player reach in range of closest poi?
   DateTime? _enterShape;
   LatLng? _playerPos;
   _ClosestPoiDist? _closestPoi;
@@ -124,6 +126,7 @@ class GameState extends ChangeNotifier {
         // Stayed in range for at leat COLLECT_TIME => collect shape
         _shapesToCollect.removeAt(closestPoi.index);
         _enterShape = null;
+        _closestPoi = null;
         notify = true;
       } else if (inRange && _enterShape == null) {
         // Arrived in range => set enter time

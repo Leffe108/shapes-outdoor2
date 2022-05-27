@@ -13,9 +13,28 @@ class GameMap extends StatefulWidget {
   State<GameMap> createState() => _GameMapState();
 }
 
+const _zoom = 14.0;
+
 class _GameMapState extends State<GameMap> {
   MapController? controller;
   LatLng? center;
+
+  @override
+  void didChangeDependencies() {
+    // Center map on new player position if it is outside
+    // the bounds of the current viewport.
+    final state = Provider.of<GameState>(context, listen: true);
+    if (center != state.playerPos && controller != null) {
+      center = state.playerPos;
+      if (center != null &&
+          controller!.bounds != null &&
+          !controller!.bounds!.contains(center)) {
+        controller!.move(center!, controller!.zoom);
+      }
+    }
+
+    super.didChangeDependencies();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +51,7 @@ class _GameMapState extends State<GameMap> {
             controller = c;
           },
           center: state.playerPos ?? LatLng(0, 0),
-          zoom: 14,
+          zoom: _zoom,
         ),
         children: [
           TileLayerWidget(
