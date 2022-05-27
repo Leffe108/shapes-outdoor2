@@ -45,10 +45,23 @@ class _CollectProgressIndicatorState extends State<CollectProgressIndicator>
 
   @override
   Widget build(BuildContext context) {
-    final value = _from != null ? _controller.value : 0.0;
-    return LinearProgressIndicator(
-      key: ValueKey<double>(value),
-      value: value,
+    if (_from == null) {
+      return Container();
+    }
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Text('Hold out a bit ..'),
+          const SizedBox(height: 4.0,),
+          LinearProgressIndicator(
+            key: ValueKey<double>(_controller.value),
+            value: _controller.value,
+          ),
+        ],
+      ),
     );
   }
 }

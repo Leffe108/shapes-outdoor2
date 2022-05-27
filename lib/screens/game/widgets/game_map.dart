@@ -52,7 +52,8 @@ class _GameMapState extends State<GameMap> {
                       '${state.playerPos} ${state.shapesToCollect.length}'),
                   markers: [
                     if (state.playerPos != null) playerMarker(state.playerPos!),
-                    for (var poi in state.shapesToCollect) shapeMarker(poi),
+                    for (var i = 0; i < state.shapesToCollect.length; i++)
+                      shapeMarker(state.shapesToCollect[i], i),
                   ],
                 ),
               );
@@ -63,12 +64,12 @@ class _GameMapState extends State<GameMap> {
     );
   }
 
-  Marker shapeMarker(Poi poi) {
+  Marker shapeMarker(Poi poi, int index) {
     return Marker(
       width: 20.0,
       height: 20.0,
       point: poi.pos,
-      builder: (context) => ShapeMarkerWidget(poi.shape),
+      builder: (context) => ShapeMarkerWidget(index),
     );
   }
 

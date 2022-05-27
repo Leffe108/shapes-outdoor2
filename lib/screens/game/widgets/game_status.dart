@@ -53,10 +53,10 @@ class GameStatus extends StatelessWidget {
               Expanded(
                 child: Consumer<GameState>(
                   builder: ((context, state, child) {
-                    if (state.distanceMToNextShape == null) {
+                    if (state.closestShapeDistanceM == null) {
                       return const Text('-');
                     }
-                    return Text('${state.distanceMToNextShape!.round()} m');
+                    return Text('${state.closestShapeDistanceM!.round()} m');
                   }),
                 ),
               ),
