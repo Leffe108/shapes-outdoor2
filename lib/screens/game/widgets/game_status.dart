@@ -29,6 +29,10 @@ class GameStatus extends StatelessWidget {
       child: Consumer<GameState>(
         builder: (context, state, child) {
           final endOfGame = state.shapesToCollect.isEmpty;
+          final collectStr = state.shapesToCollect
+                            .map((poi) => poi.shape.toUnicodeShape())
+                            .toList()
+                            .join(', ');
           return Column(
             children: [
               const CollectProgressIndicator(key: Key('collect-progress')),
@@ -39,12 +43,10 @@ class GameStatus extends StatelessWidget {
                   children: [
                     const Text('Collect: '),
                     Expanded(
-                      child: Text(
-                        state.shapesToCollect
-                            .map((poi) => poi.shape.toString().split('.')[1])
-                            .toList()
-                            .join(', '),
-                      ),
+                      child: Text.rich(TextSpan(children: [
+                        TextSpan(text: collectStr.substring(0, 1), style: TextStyle(color: Theme.of(context).colorScheme.secondary)),
+                        TextSpan(text: collectStr.substring(1)),
+                      ])),
                     ),
                   ],
                 ),

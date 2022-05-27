@@ -58,7 +58,11 @@ class GameState extends ChangeNotifier {
   }
 
   /// Create a new game
-  void newGame(int n, LatLng center) {
+  /// @param center The center location to generate from
+  /// @param n Number of shapes to create
+  /// @param minRangeM mimimum range from center in meters
+  /// @param minRangeM maximum range from center in meters
+  void newGame(LatLng center, int n, int minRangeM, int maxRangeM) {
     clear();
 
     _gameStart = DateTime.now();
@@ -70,7 +74,11 @@ class GameState extends ChangeNotifier {
     var bearing = -180.0;
 
     for (var i = 0; i < n; i++) {
-      var pos = const Distance().offset(center, 500, bearing);
+      final range = minRangeM +
+          ((maxRangeM - minRangeM) > 0
+              ? Random().nextInt(maxRangeM - minRangeM)
+              : 0);
+      var pos = const Distance().offset(center, range, bearing);
       _shapesToCollect.add(Poi(
         shape: shapes[i % shapes.length],
         pos: pos,

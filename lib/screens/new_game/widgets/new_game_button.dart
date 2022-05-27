@@ -9,7 +9,9 @@ import 'package:shapes_outdoor/utils/locate.dart';
 class NewGameButton extends StatefulWidget {
   final Widget label;
   final int n;
-  const NewGameButton(this.label, this.n, {Key? key}) : super(key: key);
+  final int minRangeM;
+  final int maxRangeM;
+  const NewGameButton(this.label, this.n, this.minRangeM, this.maxRangeM, {Key? key}) : super(key: key);
 
   @override
   State<NewGameButton> createState() => _NewGameButtonState();
@@ -56,7 +58,7 @@ class _NewGameButtonState extends State<NewGameButton> {
           }
         }
 
-        state.newGame(widget.n, pos);
+        state.newGame(pos, widget.n, widget.minRangeM, widget.maxRangeM);
         state.playerPos = pos;
         if (!mounted) return;
         Routemaster.of(context).push('/game');

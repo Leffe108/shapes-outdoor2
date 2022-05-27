@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSwatch(
             primarySwatch: Colors.teal,
             backgroundColor: Colors.teal[100],
-            accentColor: Colors.deepOrange[500],
+            accentColor: Colors.green[600],
           ),
         ),
         routerDelegate: RoutemasterDelegate(
