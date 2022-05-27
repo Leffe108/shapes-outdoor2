@@ -16,19 +16,24 @@ class NewGameScreen extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
+                Text('Collect shapes in your neigbourhood to complete this game.'),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
-                      NewGameButton(Text('Nearby'), 5, 250, 250),
+                      NewGameButton(Text('Mini'), 2, 150, 150),
                       SizedBox(
                         height: 20,
                       ),
-                      NewGameButton(Text(' Medium '), 15, 250, 750),
+                      NewGameButton(Text('Nearby'), 5, 200, 200),
                       SizedBox(
                         height: 20,
                       ),
-                      NewGameButton(Text('         Sprawl         '), 20, 250, 2500),
+                      NewGameButton(Text(' Medium '), 9, 250, 750),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      NewGameButton(Text('         Sprawl         '), 9, 250, 2500),
                     ],
                   ),
                 ),
