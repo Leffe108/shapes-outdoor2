@@ -52,10 +52,10 @@ class GameState extends ChangeNotifier {
   _ClosestPointDist? _closestPoint;
 
   GameState() {
-    clear();
+    _clear();
   }
 
-  void clear() {
+  void _clear() {
     _gameStart = null;
     _gameEnd = null;
     _points = [];
@@ -65,13 +65,19 @@ class GameState extends ChangeNotifier {
     _closestPoint = null;
   }
 
+  /// Abort current game
+  void abort() {
+    _clear();
+    notifyListeners();
+  }
+
   /// Create a new game
   /// @param center The center location to generate from
   /// @param n Number of shapes to create
   /// @param minRangeM mimimum range from center in meters
   /// @param minRangeM maximum range from center in meters
   void newGame(LatLng center, int n, int minRangeM, int maxRangeM) {
-    clear();
+    _clear();
 
     _gameStart = DateTime.now();
 

@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:routemaster/routemaster.dart';
+import 'package:shapes_outdoor/models/game_state.dart';
+import 'package:shapes_outdoor/screens/new_game/widgets/game_menu.dart';
 import 'package:shapes_outdoor/screens/new_game/widgets/new_game_button.dart';
 
 class NewGameScreen extends StatelessWidget {
@@ -7,7 +11,10 @@ class NewGameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Shapes Outdoor'), centerTitle: true,),
+      appBar: AppBar(
+        title: const Text('Shapes Outdoor'),
+        centerTitle: true,
+      ),
       body: Container(
         color: Theme.of(context).colorScheme.background,
         child: Padding(
@@ -15,29 +22,13 @@ class NewGameScreen extends StatelessWidget {
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              children: [
-                Text('Collect shapes in your neigbourhood to complete this game.'),
+              children: const [
+                Text(
+                    'Collect shapes in your neigbourhood to complete this game.'),
                 Expanded(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      NewGameButton(Text('Mini'), 2, 150, 150),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      NewGameButton(Text('Nearby'), 5, 200, 200),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      NewGameButton(Text(' Medium '), 9, 250, 750),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      NewGameButton(Text('         Sprawl         '), 9, 250, 2500),
-                    ],
-                  ),
+                  child: GameMenu(),
                 ),
-                const Text.rich(TextSpan(
+                Text.rich(TextSpan(
                   children: [
                     TextSpan(
                         text: 'Note: ',

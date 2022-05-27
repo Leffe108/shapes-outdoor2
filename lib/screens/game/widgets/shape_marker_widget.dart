@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
+import 'package:shapes_outdoor/utils/alert_dialog.dart';
 
 class ShapeMarkerWidget extends StatelessWidget {
   /// index in GameState.points
@@ -46,32 +47,17 @@ class ShapeMarkerWidget extends StatelessWidget {
                     shape: const CircleBorder(),
                   ),
                   child: textWidget,
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text('Out of reach?'),
-                        content: const Text(
-                            'If a shape is not reachable, you can skip it.\n\nShould this shape be skipped?'),
-                        actions: [
-                          TextButton(
-                            child: const Text('Yes'),
-                            onPressed: () {
-                              final state = Provider.of<GameState>(context,
-                                  listen: false);
-                              state.skip(index);
-                              Routemaster.of(context).pop();
-                            },
-                          ),
-                          TextButton(
-                            child: const Text('No'),
-                            onPressed: () {
-                              Routemaster.of(context).pop();
-                            },
-                          ),
-                        ],
-                      ),
-                    );
+                  onPressed: () async {
+                    final skip = await showYesNoDialog(
+                        context,
+                        Text('Out of reach?'),
+                        Text(
+                            'If a shape is not reachable, you can skip it.\n\nShould this shape be skipped?'));
+                    if (skip) {
+                      final state =
+                          Provider.of<GameState>(context, listen: false);
+                      state.skip(index);
+                    }
                   },
                 ),
         );

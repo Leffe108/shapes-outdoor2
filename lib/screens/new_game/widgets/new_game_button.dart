@@ -3,15 +3,18 @@ import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
+import 'package:shapes_outdoor/screens/new_game/widgets/game_menu_button.dart';
 import 'package:shapes_outdoor/utils/alert_dialog.dart';
 import 'package:shapes_outdoor/utils/locate.dart';
 
 class NewGameButton extends StatefulWidget {
-  final Widget label;
+  final Widget text;
   final int n;
   final int minRangeM;
   final int maxRangeM;
-  const NewGameButton(this.label, this.n, this.minRangeM, this.maxRangeM, {Key? key}) : super(key: key);
+  const NewGameButton(this.text, this.n, this.minRangeM, this.maxRangeM,
+      {Key? key})
+      : super(key: key);
 
   @override
   State<NewGameButton> createState() => _NewGameButtonState();
@@ -20,12 +23,8 @@ class NewGameButton extends StatefulWidget {
 class _NewGameButtonState extends State<NewGameButton> {
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ButtonStyle(
-        shape: MaterialStateProperty.all(const StadiumBorder()),
-        visualDensity: VisualDensity.comfortable,
-        textStyle: MaterialStateProperty.all(const TextStyle(fontSize: 16)),
-      ),
+    return GameMenuButton(
+      text: widget.text,
       onPressed: () async {
         var state = Provider.of<GameState>(context, listen: false);
 
@@ -49,11 +48,8 @@ class _NewGameButtonState extends State<NewGameButton> {
                     'You need to turn on location services to play this game.'));
             return;
           } else {
-            showAlert(
-                context,
-                const Text('Location error'),
-                Text(
-                    'An error occured wile obtaining your position: $e'));
+            showAlert(context, const Text('Location error'),
+                Text('An error occured wile obtaining your position: $e'));
             return;
           }
         }
@@ -63,10 +59,6 @@ class _NewGameButtonState extends State<NewGameButton> {
         if (!mounted) return;
         Routemaster.of(context).push('/game');
       },
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: widget.label,
-      ),
     );
   }
 }

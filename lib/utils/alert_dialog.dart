@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:routemaster/routemaster.dart';
 
 Future<void> showAlert(BuildContext context, Widget title, Widget message) {
   return showDialog(
@@ -11,10 +10,40 @@ Future<void> showAlert(BuildContext context, Widget title, Widget message) {
         TextButton(
           child: const Text('Ok'),
           onPressed: () {
-            Routemaster.of(context).pop();
+            Navigator.of(context).pop();
           },
         ),
       ],
     ),
   );
+}
+
+/// Shows a dialog with yes/no buttons. Resolves to true if
+/// user press Yes button, otherwise false.
+Future<bool> showYesNoDialog(
+    BuildContext context, Widget title, Widget message) async {
+  var result = false;
+  await showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: title,
+      content: message,
+      actions: [
+        TextButton(
+          child: const Text('Yes'),
+          onPressed: () {
+            result = true;
+            Navigator.of(context).pop();
+          },
+        ),
+        TextButton(
+          child: const Text('No'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+      ],
+    ),
+  );
+  return result;
 }
