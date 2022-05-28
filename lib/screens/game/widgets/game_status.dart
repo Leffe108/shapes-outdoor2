@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
 import 'package:shapes_outdoor/screens/game/widgets/collect_progress_indicator.dart';
+import 'package:shapes_outdoor/widgets/stadium_button.dart';
 import 'package:shapes_outdoor/utils/format.dart';
 
 class GameStatus extends StatelessWidget {
@@ -30,13 +32,13 @@ class GameStatus extends StatelessWidget {
         builder: (context, state, child) {
           final endOfGame = state.shapesToCollect.isEmpty;
           final collectStr = state.shapesToCollect
-                            .map((shape) => shape.toUnicodeShape())
-                            .toList()
-                            .join(', ');
+              .map((shape) => shape.toUnicodeShape())
+              .toList()
+              .join(', ');
           return Column(
             children: [
               const CollectProgressIndicator(key: Key('collect-progress')),
-              if (!endOfGame)
+              if (!endOfGame) ...[
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,13 +46,15 @@ class GameStatus extends StatelessWidget {
                     const Text('Collect: '),
                     Expanded(
                       child: Text.rich(TextSpan(children: [
-                        TextSpan(text: collectStr.substring(0, 1), style: TextStyle(color: Theme.of(context).colorScheme.primary)),
+                        TextSpan(
+                            text: collectStr.substring(0, 1),
+                            style: TextStyle(
+                                color: Theme.of(context).colorScheme.primary)),
                         TextSpan(text: collectStr.substring(1)),
                       ])),
                     ),
                   ],
                 ),
-              if (!endOfGame)
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,13 +67,22 @@ class GameStatus extends StatelessWidget {
                     ),
                   ],
                 ),
-              if (endOfGame)
+              ],
+              if (endOfGame) ...[
                 SizedBox(
                   width: double.infinity,
                   child: Text(
                     'Victory!\n\nYou have collected all shapes${state.gameDuration != null ? ' in ' + humanDuration(state.gameDuration!) : ''}.',
                   ),
                 ),
+                const SizedBox(
+                  height: 8,
+                ),
+                StadiumButton(text: Text('End game'), onPressed: () {
+                  context.read<GameState>().abort();
+                  Routemaster.of(context).pop();
+                }),
+              ],
             ],
           );
         },

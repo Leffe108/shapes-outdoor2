@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class GameMenuButton extends StatelessWidget {
+class StadiumButton extends StatelessWidget {
   final Widget text;
   final void Function() onPressed;
   final bool primary;
-  const GameMenuButton({
+  const StadiumButton({
     required this.text,
     required this.onPressed,
     this.primary = true,

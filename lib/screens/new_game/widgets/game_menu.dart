@@ -4,7 +4,7 @@ import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
 import 'package:shapes_outdoor/screens/new_game/widgets/new_game_button.dart';
 
-import 'game_menu_button.dart';
+import '../../../widgets/stadium_button.dart';
 
 class GameMenu extends StatefulWidget {
   const GameMenu({Key? key}) : super(key: key);
@@ -56,7 +56,7 @@ class _GameMenuState extends State<GameMenu> {
           const SizedBox(
             height: 10,
           ),
-          GameMenuButton(
+          StadiumButton(
             text: const Text('Resume'),
             onPressed: () {
               Routemaster.of(context).push('/game');
@@ -65,7 +65,7 @@ class _GameMenuState extends State<GameMenu> {
           const SizedBox(
             height: 10,
           ),
-          GameMenuButton(
+          StadiumButton(
             text: const Text('Abort'),
             primary: false,
             onPressed: () {
