@@ -5,6 +5,7 @@ import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
 import 'package:shapes_outdoor/screens/game/game_screen.dart';
 import 'package:shapes_outdoor/screens/new_game/new_game_screen.dart';
+import 'package:shapes_outdoor/theme/app_theme.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
@@ -22,13 +23,8 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp.router(
         title: 'Flutter Demo',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSwatch(
-            primarySwatch: Colors.green,
-            backgroundColor: Colors.green[100],
-            accentColor: Colors.blue[600],
-          ),
-        ),
+        theme: buildAppTheme(dark: false),
+        darkTheme: buildAppTheme(dark: true),
         routerDelegate: RoutemasterDelegate(
           routesBuilder: (context) => RouteMap(routes: {
             '/': (routeData) => const MaterialPage(child: NewGameScreen()),

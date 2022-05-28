@@ -58,13 +58,16 @@ class _GameMapState extends State<GameMap> {
         children: [
           TileLayerWidget(
             options: TileLayerOptions(
-              urlTemplate: dotenv.env['MAP_URL'],
+              urlTemplate: Theme.of(context).brightness == Brightness.light
+                  ? dotenv.env['MAP_URL']
+                  : dotenv.env['MAP_URL_DARK'],
               subdomains: ['a', 'b', 'c'],
               attributionBuilder: (_) {
                 return Container(
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.4),
-                    borderRadius: const BorderRadius.only(topLeft: Radius.circular(8.0)),
+                    borderRadius:
+                        const BorderRadius.only(topLeft: Radius.circular(8.0)),
                   ),
                   padding: const EdgeInsets.all(4.0),
                   child: const Text(
