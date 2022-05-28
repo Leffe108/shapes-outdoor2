@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shapes_outdoor/utils/vibrate.dart';
 
@@ -175,10 +176,12 @@ class GameState extends ChangeNotifier {
       } else if (inRange && _enterPoint == null) {
         // Arrived in range => set enter time
         _enterPoint = now;
+        vibrate(FeedbackType.medium);
         notify = true;
       } else if (!inRange && _enterPoint != null) {
         // Went out of range => reset enter time
         _enterPoint = null;
+        vibrate(FeedbackType.light);
         notify = true;
       }
     }
@@ -202,7 +205,7 @@ class GameState extends ChangeNotifier {
       _gameEnd = DateTime.now();
     }
 
-    vibrate();
+    vibrate(FeedbackType.heavy);
   }
 
   /// Get the closest point of give shape
