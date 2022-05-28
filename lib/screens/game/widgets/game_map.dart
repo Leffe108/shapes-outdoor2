@@ -62,17 +62,27 @@ class _GameMapState extends State<GameMap> {
                   ? dotenv.env['MAP_URL']
                   : dotenv.env['MAP_URL_DARK'],
               subdomains: ['a', 'b', 'c'],
+              backgroundColor: Theme.of(context).brightness == Brightness.light
+                  ? Color(0xFFE0E0E0)
+                  : Colors.black,
               attributionBuilder: (_) {
                 return Container(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.4),
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.white.withOpacity(0.4)
+                        : Colors.black.withOpacity(0.4),
                     borderRadius:
                         const BorderRadius.only(topLeft: Radius.circular(8.0)),
                   ),
                   padding: const EdgeInsets.all(4.0),
-                  child: const Text(
+                  child: Text(
                     "© MapTiler, © OpenStreetMap contributors",
-                    style: TextStyle(fontSize: 10.0),
+                    style: TextStyle(
+                      fontSize: 10.0,
+                    color: Theme.of(context).brightness == Brightness.light
+                        ? Colors.grey[700]
+                        : Colors.grey[400],
+                    ),
                   ),
                 );
               },
