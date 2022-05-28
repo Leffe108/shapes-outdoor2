@@ -53,7 +53,11 @@ class _GameMapState extends State<GameMap> {
             controller = c;
           },
           center: state.playerPos ?? LatLng(0, 0),
-          zoom: _zoom,
+          bounds: _gameBounds(state),
+          boundsOptions: const FitBoundsOptions(
+            padding: EdgeInsets.all(50.0),
+            maxZoom: 16,
+          ),
         ),
         children: [
           TileLayerWidget(
@@ -79,9 +83,9 @@ class _GameMapState extends State<GameMap> {
                     "© MapTiler, © OpenStreetMap contributors",
                     style: TextStyle(
                       fontSize: 10.0,
-                    color: Theme.of(context).brightness == Brightness.light
-                        ? Colors.grey[700]
-                        : Colors.grey[400],
+                      color: Theme.of(context).brightness == Brightness.light
+                          ? Colors.grey[700]
+                          : Colors.grey[400],
                     ),
                   ),
                 );
@@ -127,4 +131,15 @@ class _GameMapState extends State<GameMap> {
       builder: (context) => const PlayerMarkerWidget(key: Key('player-marker')),
     );
   }
+}
+
+/// Get LatLngBounds of the game content
+/// (player + points)
+LatLngBounds _gameBounds(GameState state) {
+  var b = LatLngBounds();
+  b.extend(state.playerPos);
+  for (var point in state.points) {
+    b.extend(point.pos);
+  }
+  return b;
 }
