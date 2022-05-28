@@ -155,7 +155,7 @@ class GameState extends ChangeNotifier {
 
     if (_points.isNotEmpty) {
       final closestPoint =
-          _findClosestPoint(_playerPos!, _points[0].shape);
+          _findClosestPoint(_playerPos!, _shapes[0]);
       assert(closestPoint.index != -1);
       if (_closestPoint == null ||
           closestPoint.distM != _closestPoint!.distM ||
