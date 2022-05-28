@@ -14,19 +14,24 @@ class PlayerMarkerWidget extends StatelessWidget {
     final bg = Color.lerp(border, Colors.white, 0.7);
     //return Center(child: Icon(Icons.directions_walk, color: border, size: 12.0,));
     return Consumer<GameState>(builder: (context, state, child) {
-      return Transform.rotate(
-        angle: (state.playerHeading ?? 0.0) / 180 * pi,
+      return AnimatedRotation(
+        key: const Key('player-rotation'),
+        turns: (state.playerHeading ?? 0.0) / 180 * pi,
+        duration: const Duration(seconds: 1),
         child: Container(
           decoration: BoxDecoration(
             color: bg,
             borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(10000),
-                topRight: Radius.circular(10000)),
+              topLeft: Radius.circular(10000),
+              topRight: Radius.circular(10000),
+              bottomLeft: Radius.circular(10000),
+              bottomRight: Radius.circular(10000),
+            ),
           ),
           child: Icon(
             Icons.directions_walk,
             color: border,
-            size: 12.0,
+            size: 22.0,
           ),
         ),
       );

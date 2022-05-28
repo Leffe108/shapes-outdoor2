@@ -108,10 +108,10 @@ class _GameMapState extends State<GameMap> {
 
   Marker playerMarker(LatLng playerPos) {
     return Marker(
-      width: 14.0,
-      height: 14.0,
+      width: 26.0,
+      height: 26.0,
       point: playerPos,
-      builder: (context) => const PlayerMarkerWidget(),
+      builder: (context) => const PlayerMarkerWidget(key: Key('player-marker')),
     );
   }
 }

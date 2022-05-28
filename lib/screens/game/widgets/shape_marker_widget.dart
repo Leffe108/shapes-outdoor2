@@ -47,14 +47,13 @@ class ShapeMarkerWidget extends StatelessWidget {
                   ),
                   child: textWidget,
                   onPressed: () async {
+                    final state = Provider.of<GameState>(context, listen: false);
                     final skip = await showYesNoDialog(
                         context,
                         const Text('Out of reach?'),
                         const Text(
                             'If a shape is not reachable, you can skip it.\n\nShould this shape be skipped?'));
                     if (skip) {
-                      final state =
-                          Provider.of<GameState>(context, listen: false);
                       state.skip(index);
                     }
                   },
