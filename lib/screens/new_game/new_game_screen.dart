@@ -10,6 +10,7 @@ class NewGameScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Select level'),
         centerTitle: true,
+        backgroundColor: Theme.of(context).colorScheme.background,
         shadowColor: Colors.transparent,
       ),
       body: Container(

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
 import 'package:shapes_outdoor/screens/game/widgets/game_map.dart';
 import 'package:shapes_outdoor/screens/game/widgets/game_status.dart';
 import 'package:shapes_outdoor/screens/game/widgets/location_watcher.dart';
+import 'package:shapes_outdoor/utils/settings_dialog.dart';
 
 class GameScreen extends StatelessWidget {
   const GameScreen({Key? key}) : super(key: key);
@@ -12,6 +14,12 @@ class GameScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            Routemaster.of(context).pop();
+          },
+        ),
         title: Builder(builder: (context) {
           final nextShape = context.select<GameState, ShapeType?>(
             (state) => state.nextShape,
@@ -21,6 +29,14 @@ class GameScreen extends StatelessWidget {
               : 'Collect shapes';
           return Text(s);
         }),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.settings),
+            onPressed: () {
+              showSettingsDialog(context);
+            },
+          ),
+        ],
         backgroundColor: Theme.of(context).colorScheme.background,
       ),
       body: Column(children: const [

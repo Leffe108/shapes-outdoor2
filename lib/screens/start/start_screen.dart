@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:shapes_outdoor/utils/settings_dialog.dart';
 import 'package:shapes_outdoor/widgets/stadium_button.dart';
 
 class StartScreen extends StatelessWidget {
@@ -23,12 +24,19 @@ class StartScreen extends StatelessWidget {
             const SizedBox(height: 10),
             const Text(
                 'Collect shapes in your neigbourhood to complete this game.'),
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
             Expanded(child: Container()),
             StadiumButton(
               text: const Text('Start game'),
               onPressed: () {
                 Routemaster.of(context).push('/new-game');
+              },
+            ),
+            const SizedBox(height: 20),
+            IconButton(
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                showSettingsDialog(context);
               },
             ),
           ]),

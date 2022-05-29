@@ -45,5 +45,9 @@
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Location is used to generate a game nearby you and to play the game</string>
+	<key>UIBackgroundModes</key>
+	<string>locatior</string>
 </dict>
 </plist>
