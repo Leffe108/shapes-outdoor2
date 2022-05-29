@@ -7,8 +7,12 @@ ThemeData buildAppTheme({required bool dark}) {
           brightness: Brightness.dark,
           colorScheme: ColorScheme.fromSeed(
             seedColor: Colors.green[700]!,
-            background: Color.lerp(Color.lerp(Colors.green[900]!, Colors.brown, 0.3), Colors.black, 0.5),
+            background: Color.lerp(
+                Color.lerp(Colors.green[900]!, Colors.brown, 0.3),
+                Colors.black,
+                0.5),
             brightness: Brightness.dark,
+            secondary: Colors.blue[600],
           ),
         )
       // Light theme base

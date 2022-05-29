@@ -6,9 +6,11 @@ import 'package:shapes_outdoor/utils/alert_dialog.dart';
 class ShapeMarkerWidget extends StatelessWidget {
   /// index in GameState.points
   final int index;
+  final ShapeType shape;
   final double size;
 
-  const ShapeMarkerWidget(this.index, this.size, {Key? key}) : super(key: key);
+  const ShapeMarkerWidget(this.index, this.shape, this.size, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +18,6 @@ class ShapeMarkerWidget extends StatelessWidget {
     return Consumer<GameState>(
       builder: (context, state, child) {
         final nextShape = state.shapesToCollect[0];
-        final shape = state.points[index].shape;
         final closest = state.closestShapeIndex == index;
         final inRange =
             closest && state.closestShapeDistanceM! < collectRangeMeters;
@@ -47,7 +48,8 @@ class ShapeMarkerWidget extends StatelessWidget {
                   ),
                   child: textWidget,
                   onPressed: () async {
-                    final state = Provider.of<GameState>(context, listen: false);
+                    final state =
+                        Provider.of<GameState>(context, listen: false);
                     final skip = await showYesNoDialog(
                         context,
                         const Text('Out of reach?'),

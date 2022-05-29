@@ -55,7 +55,9 @@ class _CollectProgressIndicatorState extends State<CollectProgressIndicator>
         mainAxisSize: MainAxisSize.min,
         children: [
           const Text('Hold out a bit ..'),
-          const SizedBox(height: 4.0,),
+          const SizedBox(
+            height: 4.0,
+          ),
           LinearProgressIndicator(
             key: ValueKey<double>(_controller.value),
             value: _controller.value,

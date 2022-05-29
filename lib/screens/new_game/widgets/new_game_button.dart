@@ -4,9 +4,9 @@ import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
-import 'package:shapes_outdoor/widgets/stadium_button.dart';
 import 'package:shapes_outdoor/utils/alert_dialog.dart';
 import 'package:shapes_outdoor/utils/locate.dart';
+import 'package:shapes_outdoor/widgets/stadium_button.dart';
 
 class NewGameButton extends StatefulWidget {
   final Widget text;
@@ -59,7 +59,7 @@ class _NewGameButtonState extends State<NewGameButton> {
         }
 
         state.newGame(pos, widget.n, widget.minRangeM, widget.maxRangeM);
-        state.setPlayerPos(pos, location.heading);
+        state.playerPos = pos;
         if (!mounted) return;
         Routemaster.of(context).push('/game');
       },

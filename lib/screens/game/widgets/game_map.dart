@@ -39,7 +39,7 @@ class _GameMapState extends State<GameMap> {
 
   @override
   Widget build(BuildContext context) {
-    final state = Provider.of<GameState>(context, listen: false);
+    final state = context.read<GameState>();
     return ConstrainedBox(
       constraints: const BoxConstraints(
         minHeight: 100,
@@ -67,7 +67,7 @@ class _GameMapState extends State<GameMap> {
                   : dotenv.env['MAP_URL_DARK'],
               subdomains: ['a', 'b', 'c'],
               backgroundColor: Theme.of(context).brightness == Brightness.light
-                  ? Color(0xFFE0E0E0)
+                  ? const Color(0xFFE0E0E0)
                   : Colors.black,
               attributionBuilder: (_) {
                 return Container(
@@ -92,14 +92,20 @@ class _GameMapState extends State<GameMap> {
               },
             ),
           ),
-          Consumer<GameState>(
-            builder: ((context, state, child) {
+          MarkerLayerWidget(
+            options: MarkerLayerOptions(
+              markers: [
+                playerMarker(context),
+              ],
+            ),
+          ),
+          Builder(
+            builder: ((context) {
+              final state = context.watch<GameState>();
               return MarkerLayerWidget(
                 options: MarkerLayerOptions(
-                  key: ValueKey<String>(
-                      '${state.playerPos} ${state.points.length}'),
+                  key: ValueKey<String>('${state.points.length}'),
                   markers: [
-                    if (state.playerPos != null) playerMarker(state.playerPos!),
                     for (var i = 0; i < state.points.length; i++)
                       shapeMarker(state.points[i], i),
                   ],
@@ -119,15 +125,17 @@ class _GameMapState extends State<GameMap> {
       width: size,
       height: size,
       point: point.pos,
-      builder: (context) => ShapeMarkerWidget(index, size),
+      builder: (context) => ShapeMarkerWidget(index, point.shape, size),
     );
   }
 
-  Marker playerMarker(LatLng playerPos) {
+  Marker playerMarker(BuildContext context) {
+    final playerPos =
+        context.select<GameState, LatLng?>((state) => state.playerPos);
     return Marker(
       width: 26.0,
       height: 26.0,
-      point: playerPos,
+      point: playerPos ?? LatLng(0, 0),
       builder: (context) => const PlayerMarkerWidget(key: Key('player-marker')),
     );
   }

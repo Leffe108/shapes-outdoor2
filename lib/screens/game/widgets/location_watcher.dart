@@ -1,8 +1,6 @@
-
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
@@ -23,12 +21,12 @@ class _LocationWatcherState extends State<LocationWatcher> {
   @override
   void initState() {
     _stream = watchPosition();
-    _streamSubscription = _stream.listen((location) { 
+    _streamSubscription = _stream.listen((location) {
       print('new position: ${location.latitude}, ${location.longitude}');
       final pos = location.toLatLng();
       if (pos != null) {
         final state = Provider.of<GameState>(context, listen: false);
-        state.setPlayerPos(pos, location.heading);
+        state.playerPos = pos;
       }
     });
     super.initState();
