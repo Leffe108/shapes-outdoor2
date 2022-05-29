@@ -8,7 +8,10 @@ Future<void> showAlert(BuildContext context, Widget title, Widget message) {
       content: message,
       actions: [
         TextButton(
-          child: const Text('Ok'),
+          child: Text(
+            'Ok',
+            style: Theme.of(context).textTheme.button,
+          ),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -29,13 +32,19 @@ Future<bool> showYesNoDialog(
       content: message,
       actions: [
         TextButton(
-          child: const Text('Yes'),
+          child: Text(
+            'Yes',
+            style: Theme.of(context).textTheme.button,
+          ),
           onPressed: () {
             Navigator.of(context).pop(true);
           },
         ),
         TextButton(
-          child: const Text('No'),
+          child: Text(
+            'No',
+            style: Theme.of(context).textTheme.button,
+          ),
           onPressed: () {
             Navigator.of(context).pop(false);
           },

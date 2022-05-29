@@ -118,6 +118,9 @@ class GameState extends ChangeNotifier {
   /// List giving ShapeType to collect order
   List<ShapeType> get shapesToCollect => _shapes;
 
+  /// Next shape to collect
+  ShapeType? get nextShape => _shapes.isNotEmpty ? _shapes[0] : null;
+
   /// Distance in meters to next shape
   double? get closestShapeDistanceM => _closestPoint?.distM;
 

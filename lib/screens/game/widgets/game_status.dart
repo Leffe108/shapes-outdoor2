@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
 import 'package:shapes_outdoor/screens/game/widgets/collect_progress_indicator.dart';
-import 'package:shapes_outdoor/widgets/stadium_button.dart';
 import 'package:shapes_outdoor/utils/format.dart';
+import 'package:shapes_outdoor/widgets/stadium_button.dart';
 
 class GameStatus extends StatelessWidget {
   const GameStatus({Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class GameStatus extends StatelessWidget {
           ),
         ],
       ),
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(15),
       child: Consumer<GameState>(
         builder: (context, state, child) {
           final endOfGame = state.shapesToCollect.isEmpty;
@@ -69,19 +69,28 @@ class GameStatus extends StatelessWidget {
                 ),
               ],
               if (endOfGame) ...[
+                const SizedBox(
+                  height: 15,
+                ),
                 SizedBox(
                   width: double.infinity,
                   child: Text(
-                    'Victory!\n\nYou have collected all shapes${state.gameDuration != null ? ' in ' + humanDuration(state.gameDuration!) : ''}.',
+                    'Victory!\n\nYou have collected all shapes${state.gameDuration != null ? ' in ${humanDuration(state.gameDuration!)}' : ''}.',
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 30,
                 ),
-                StadiumButton(text: Text('End game'), onPressed: () {
-                  context.read<GameState>().abort();
-                  Routemaster.of(context).pop();
-                }),
+                StadiumButton(
+                    text: const Text('End game'),
+                    onPressed: () {
+                      context.read<GameState>().abort();
+                      Routemaster.of(context).pop();
+                    }),
+                const SizedBox(
+                  height: 15,
+                ),
               ],
             ],
           );

@@ -54,16 +54,16 @@ class _GameMenuState extends State<GameMenu> {
         children: [
           const Text('You have a game in progress'),
           const SizedBox(
-            height: 10,
+            height: 30,
           ),
           StadiumButton(
             text: const Text('Resume'),
             onPressed: () {
-              Routemaster.of(context).push('/game');
+              Routemaster.of(context).push('/new-game/game');
             },
           ),
           const SizedBox(
-            height: 10,
+            height: 50,
           ),
           StadiumButton(
             text: const Text('Abort'),

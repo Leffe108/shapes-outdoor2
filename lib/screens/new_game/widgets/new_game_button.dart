@@ -61,7 +61,7 @@ class _NewGameButtonState extends State<NewGameButton> {
         state.newGame(pos, widget.n, widget.minRangeM, widget.maxRangeM);
         state.playerPos = pos;
         if (!mounted) return;
-        Routemaster.of(context).push('/game');
+        Routemaster.of(context).push('/new-game/game');
       },
     );
   }
