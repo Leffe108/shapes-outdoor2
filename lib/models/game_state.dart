@@ -17,7 +17,7 @@ enum ShapeType {
       case 'square':
         return '■';
       case 'circle':
-        return '●';
+        return '⬤';
     }
     return '';
   }

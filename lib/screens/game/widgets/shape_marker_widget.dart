@@ -22,14 +22,22 @@ class ShapeMarkerWidget extends StatelessWidget {
         final inRange =
             closest && state.closestShapeDistanceM! < collectRangeMeters;
         final color = inRange
-            ? theme.colorScheme.primary
+            ? theme.colorScheme.secondary
             : (shape == nextShape
                 ? theme.colorScheme.primary
                 : Colors.grey[600]!);
 
         final textWidget = Text(
           shape.toUnicodeShape(),
-          style: TextStyle(color: color, fontSize: 20),
+          style: TextStyle(color: color, fontSize: 20, shadows: [
+            Shadow(
+              color: Theme.of(context).brightness == Brightness.light
+                  ? Colors.black.withOpacity(0.4)
+                  : Colors.white.withOpacity(0.4),
+              blurRadius: 20,
+              offset: const Offset(0, 0),
+            ),
+          ]),
         );
 
         return Center(
