@@ -88,7 +88,7 @@ class GameState extends ChangeNotifier {
     // Shuffle the order of shapes in points
     shapes.shuffle();
 
-    var bearing = -180.0;
+    var bearing = Random().nextDouble() * 360.0 - 180.0;
 
     for (var i = 0; i < n; i++) {
       final range = minRangeM +
