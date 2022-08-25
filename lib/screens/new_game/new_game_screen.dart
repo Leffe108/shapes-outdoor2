@@ -31,7 +31,7 @@ class NewGameScreen extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     TextSpan(
                         text:
-                            'shapes to collect are randomly positionated. If you find in the game that a shape is unreachable or in a dangerous position, tap on it to skip.'),
+                            'shapes to collect are randomly positionated. If you find that a shape is unreachable or in a dangerous position, tap on it to skip.'),
                   ],
                 )),
               ],
