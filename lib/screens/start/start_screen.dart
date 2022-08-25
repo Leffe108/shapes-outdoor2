@@ -20,8 +20,32 @@ class StartScreen extends StatelessWidget {
             ),
             Expanded(child: Container()),
             const SizedBox(height: 30),
-            const AspectRatio(aspectRatio: 4 / 3, child: Placeholder()),
-            const SizedBox(height: 10),
+            GestureDetector(
+              onTap: () {
+                Routemaster.of(context).push('/new-game');
+              },
+              child: AspectRatio(
+                aspectRatio: 1 / 1,
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Theme.of(context).brightness == Brightness.light
+                            ? Colors.black.withOpacity(0.10)
+                            : Colors.black.withOpacity(0.15),
+                        offset: const Offset(2, 2),
+                        blurRadius: 5,
+                        spreadRadius: 5,
+                      ),
+                    ],
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: Image.asset('assets/start-image.jpg'),
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
             const Text(
                 'Collect shapes in your neigbourhood to complete this game.'),
             const SizedBox(height: 20),
