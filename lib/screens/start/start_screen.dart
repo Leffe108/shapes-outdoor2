@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/utils/settings_dialog.dart';
 import 'package:shapes_outdoor/widgets/stadium_button.dart';
@@ -29,6 +30,7 @@ class StartScreen extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
+                    color: Colors.black,
                     boxShadow: [
                       BoxShadow(
                         color: Theme.of(context).brightness == Brightness.light
@@ -41,7 +43,10 @@ class StartScreen extends StatelessWidget {
                     ],
                   ),
                   clipBehavior: Clip.antiAlias,
-                  child: Image.asset('assets/start-image.jpg'),
+                  child: FadeIn(
+                    duration: const Duration(milliseconds: 700),
+                    child: Image.asset('assets/start-image.jpg'),
+                  ),
                 ),
               ),
             ),
