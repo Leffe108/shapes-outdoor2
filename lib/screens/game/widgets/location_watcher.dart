@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:location/location.dart';
 import 'package:provider/provider.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
@@ -19,6 +19,7 @@ class _LocationWatcherState extends State<LocationWatcher> {
   late Stream<LocationData> _stream;
   late StreamSubscription<LocationData> _streamSubscription;
   late Settings _settings;
+  ShapeType? _lastNextShape;
 
   @override
   void initState() {
@@ -67,6 +68,30 @@ class _LocationWatcherState extends State<LocationWatcher> {
   void dispose() {
     _stop();
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    final nextShape = Provider.of<GameState>(context, listen: true).nextShape;
+    if (nextShape != _lastNextShape) {
+      final iconName =
+          nextShape != null ? nextShape.toString().split('.').last : '';
+
+      final l = Location.instance;
+      l.changeNotificationOptions(
+        title: 'Collect shapes in background',
+        subtitle: 'Go to settings in Shapes Outdoor to disable.',
+        color: Theme.of(context).colorScheme.primary,
+        iconName: iconName,
+        //onTapBringToFront: true,
+      );
+
+      setState(() {
+        _lastNextShape = nextShape;
+      });
+    }
+
+    super.didChangeDependencies();
   }
 
   @override

@@ -47,6 +47,8 @@
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Location is used to generate a game nearby you and to play the game</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Background location is optional and is used to collect shapes when the game is in background.</string>
 	<key>UIBackgroundModes</key>
 	<string>locatior</string>
 </dict>

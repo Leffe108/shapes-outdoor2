@@ -2,7 +2,6 @@
 
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
-import 'package:shapes_outdoor/models/settings.dart';
 
 // Was not granted permission to location services
 class PermissionError extends Exception {
@@ -48,19 +47,6 @@ Future<LocationData> getUserPosition() async {
   }
 
   throw LocationDataError('null lat/lon');
-}
-
-/// Opens a Location stream and adds event handlers
-/// to settings.backgroundLocation and the stream
-/// to start/stop background location service
-/// so it is only enabled when there is an active
-/// stream and the setting is enabled.
-///
-/// Registered event listeners are unregistered
-/// when the stream ends.
-Stream<LocationData> watchPosition(Settings settings) {
-  final l = Location.instance;
-  return l.onLocationChanged;
 }
 
 extension LocationDataToLatLng on LocationData {
