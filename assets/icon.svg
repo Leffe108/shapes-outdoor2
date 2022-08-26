@@ -28,27 +28,52 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.42627315"
-     inkscape:cx="-175.94352"
-     inkscape:cy="594.68911"
+     inkscape:cx="290.89329"
+     inkscape:cy="582.95954"
      inkscape:window-width="1350"
-     inkscape:window-height="1160"
-     inkscape:window-x="39"
-     inkscape:window-y="0"
+     inkscape:window-height="1080"
+     inkscape:window-x="2309"
+     inkscape:window-y="51"
      inkscape:window-maximized="0"
      inkscape:current-layer="layer1" />
   <defs
-     id="defs8485" />
+     id="defs8485">
+    <filter
+       inkscape:collect="always"
+       style="color-interpolation-filters:sRGB"
+       id="filter24602"
+       x="-0.087449197"
+       y="-0.087510825"
+       width="1.1748984"
+       height="1.1750216">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="2.9591024"
+         id="feGaussianBlur24604" />
+    </filter>
+  </defs>
   <g
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
+       style="fill:#a5d6a7;fill-opacity:1;stroke:none;stroke-width:0;stroke-linecap:round;stroke-linejoin:round;stroke-opacity:1"
        id="rect13616"
        width="270.93332"
        height="270.93332"
        x="0"
        y="0" />
+    <text
+       xml:space="preserve"
+       style="font-size:117.127px;line-height:125%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;fill:#b6deb8;fill-opacity:1;stroke:none;stroke-width:0.264584px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;filter:url(#filter24602)"
+       x="77.47477"
+       y="176.04384"
+       id="text24462"><tspan
+         sodipodi:role="line"
+         id="tspan24460"
+         style="fill:#b6deb8;fill-opacity:1;stroke-width:0.264584px;stroke:none"
+         x="77.47477"
+         y="176.04384">▲</tspan></text>
     <text
        xml:space="preserve"
        style="font-size:117.127px;line-height:125%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:0.264584px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
