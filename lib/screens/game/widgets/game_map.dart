@@ -59,9 +59,33 @@ class _GameMapState extends State<GameMap> {
             maxZoom: 16,
           ),
         ),
+        nonRotatedChildren: [
+          AttributionWidget(attributionBuilder: (_) {
+            return Container(
+              decoration: BoxDecoration(
+                color: Theme.of(context).brightness == Brightness.light
+                    ? Colors.white.withOpacity(0.4)
+                    : Colors.black.withOpacity(0.4),
+                borderRadius:
+                    const BorderRadius.only(topLeft: Radius.circular(8.0)),
+              ),
+              padding: const EdgeInsets.all(4.0),
+              child: Text(
+                "© MapTiler, © OpenStreetMap contributors",
+                style: TextStyle(
+                  fontSize: 10.0,
+                  color: Theme.of(context).brightness == Brightness.light
+                      ? Colors.grey[700]
+                      : Colors.grey[400],
+                ),
+              ),
+            );
+          })
+        ],
         children: [
           TileLayerWidget(
             options: TileLayerOptions(
+              userAgentPackageName: 'net.junctioneer.shapesoutdoor2',
               urlTemplate: Theme.of(context).brightness == Brightness.light
                   ? dotenv.env['MAP_URL']
                   : dotenv.env['MAP_URL_DARK'],
@@ -69,27 +93,6 @@ class _GameMapState extends State<GameMap> {
               backgroundColor: Theme.of(context).brightness == Brightness.light
                   ? const Color(0xFFE0E0E0)
                   : Colors.black,
-              attributionBuilder: (_) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Theme.of(context).brightness == Brightness.light
-                        ? Colors.white.withOpacity(0.4)
-                        : Colors.black.withOpacity(0.4),
-                    borderRadius:
-                        const BorderRadius.only(topLeft: Radius.circular(8.0)),
-                  ),
-                  padding: const EdgeInsets.all(4.0),
-                  child: Text(
-                    "© MapTiler, © OpenStreetMap contributors",
-                    style: TextStyle(
-                      fontSize: 10.0,
-                      color: Theme.of(context).brightness == Brightness.light
-                          ? Colors.grey[700]
-                          : Colors.grey[400],
-                    ),
-                  ),
-                );
-              },
             ),
           ),
           MarkerLayerWidget(
