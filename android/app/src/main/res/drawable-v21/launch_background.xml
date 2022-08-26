@@ -12,6 +12,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/triangle" />
+            android:src="@drawable/notification_triangle" />
     </item>
 </layer-list>

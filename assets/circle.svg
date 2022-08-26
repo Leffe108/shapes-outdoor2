@@ -8,8 +8,8 @@
    version="1.1"
    id="svg5"
    inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
-   sodipodi:docname="triangle.svg"
-   inkscape:export-filename="..\android\app\src\main\res\drawable\triangle.png"
+   sodipodi:docname="circle.svg"
+   inkscape:export-filename="..\android\app\src\main\res\drawable-night\circle.png"
    inkscape:export-xdpi="4.5"
    inkscape:export-ydpi="4.5"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
@@ -28,13 +28,13 @@
      showgrid="false"
      units="px"
      inkscape:zoom="0.77771465"
-     inkscape:cx="203.15935"
-     inkscape:cy="561.90275"
-     inkscape:window-width="1920"
-     inkscape:window-height="1137"
-     inkscape:window-x="1912"
-     inkscape:window-y="-8"
-     inkscape:window-maximized="1"
+     inkscape:cx="74.577482"
+     inkscape:cy="563.18857"
+     inkscape:window-width="1350"
+     inkscape:window-height="1161"
+     inkscape:window-x="1942"
+     inkscape:window-y="15"
+     inkscape:window-maximized="0"
      inkscape:current-layer="layer1"
      inkscape:showpageshadow="2"
      inkscape:deskcolor="#d1d1d1" />
@@ -44,16 +44,13 @@
      inkscape:label="Lager 1"
      inkscape:groupmode="layer"
      id="layer1">
-    <text
-       xml:space="preserve"
-       style="font-size:178.431px;line-height:125%;font-family:Arial;-inkscape-font-specification:Arial;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264584px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       x="-20.304787"
-       y="129.95706"
-       id="text1134"><tspan
-         sodipodi:role="line"
-         id="tspan1132"
-         style="fill:#000000;fill-opacity:1;stroke-width:0.264584px;stroke:none"
-         x="-20.304787"
-         y="129.95706">▲</tspan></text>
+    <rect
+       style="fill:#000000;fill-opacity:1;stroke-width:0;stroke-linecap:round;stroke-linejoin:round"
+       id="rect17383"
+       width="107.56975"
+       height="107.56975"
+       x="13.948454"
+       y="13.948454"
+       ry="53.784874" />
   </g>
 </svg>

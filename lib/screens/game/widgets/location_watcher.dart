@@ -74,8 +74,9 @@ class _LocationWatcherState extends State<LocationWatcher> {
   void didChangeDependencies() {
     final nextShape = Provider.of<GameState>(context, listen: true).nextShape;
     if (nextShape != _lastNextShape) {
-      final iconName =
-          nextShape != null ? nextShape.toString().split('.').last : '';
+      final iconName = nextShape != null
+          ? 'notification_${nextShape.toString().split('.').last}'
+          : 'triangle';
 
       final l = Location.instance;
       l.changeNotificationOptions(
