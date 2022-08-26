@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shapes_outdoor/models/settings.dart';
 import 'package:shapes_outdoor/utils/alert_dialog.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 /// Shows a dialog with yes/no buttons. Resolves to true if
 /// user press Yes button, otherwise false.
@@ -35,17 +34,6 @@ Future<void> showSettingsDialog(BuildContext context) async {
                   },
                 );
               }),
-          const SizedBox(
-            height: 20,
-          ),
-          TextButton(
-            child: const Text('Privacy Policy'),
-            onPressed: () {
-              final uri = Uri.parse(
-                  'https://junctioneer.net/shapes-outdoor2/privacy-policy/');
-              launchUrl(uri, mode: LaunchMode.inAppWebView);
-            },
-          ),
         ],
       );
     },

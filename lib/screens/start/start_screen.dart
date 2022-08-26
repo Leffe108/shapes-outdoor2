@@ -3,6 +3,7 @@ import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/utils/settings_dialog.dart';
 import 'package:shapes_outdoor/widgets/stadium_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({Key? key}) : super(key: key);
@@ -62,11 +63,34 @@ class StartScreen extends StatelessWidget {
               },
             ),
             const SizedBox(height: 20),
-            IconButton(
-              icon: const Icon(Icons.settings),
-              onPressed: () {
-                showSettingsDialog(context);
-              },
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.settings),
+                  onPressed: () {
+                    showSettingsDialog(context);
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.question_mark),
+                  onPressed: () {
+                    showAboutDialog(
+                        applicationName: 'Shapes Outdoor 2',
+                        context: context,
+                        children: [
+                          StadiumButton(
+                            text: const Text('Privacy Policy'),
+                            onPressed: () {
+                              final uri = Uri.parse(
+                                  'https://junctioneer.net/shapes-outdoor2/privacy-policy/');
+                              launchUrl(uri, mode: LaunchMode.inAppWebView);
+                            },
+                          ),
+                        ]);
+                  },
+                ),
+              ],
             ),
           ]),
         ),
