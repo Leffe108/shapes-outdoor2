@@ -130,15 +130,20 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
 
   Future<void> locatePlayerAndStartGame() async {
     var state = Provider.of<GameState>(context, listen: false);
+    final router = Routemaster.of(context);
 
     final pos = await locatePlayer();
-    if (pos == null || !mounted) {
+    if (!mounted) {
+      return;
+    }
+    if (pos == null) {
+      router.pop();
       return;
     }
 
     state.newGameFromLevel(pos, widget.level);
     state.playerPos = pos;
-    Routemaster.of(context).push('/new-game/game');
+    router.push('/new-game/game');
   }
 
   Future<LatLng?> locatePlayer() async {
@@ -170,6 +175,6 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
         return null;
       }
     }
-    return null;
+    return pos;
   }
 }
