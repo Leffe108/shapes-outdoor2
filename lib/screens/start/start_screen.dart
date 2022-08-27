@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:shapes_outdoor/utils/privacy_policy.dart';
 import 'package:shapes_outdoor/utils/settings_dialog.dart';
 import 'package:shapes_outdoor/widgets/stadium_button.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class StartScreen extends StatelessWidget {
   const StartScreen({Key? key}) : super(key: key);
@@ -123,9 +123,7 @@ class StartScreen extends StatelessWidget {
                     StadiumButton(
                       text: const Text('Privacy Policy'),
                       onPressed: () {
-                        final uri = Uri.parse(
-                            'https://junctioneer.net/shapes-outdoor2/privacy-policy/');
-                        launchUrl(uri, mode: LaunchMode.inAppWebView);
+                        showPrivacyPolicy();
                       },
                     ),
                   ]);

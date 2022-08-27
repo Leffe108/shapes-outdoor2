@@ -6,8 +6,8 @@ import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
 import 'package:shapes_outdoor/utils/alert_dialog.dart';
 import 'package:shapes_outdoor/utils/locate.dart';
+import 'package:shapes_outdoor/utils/privacy_policy.dart';
 import 'package:shapes_outdoor/widgets/stadium_button.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class StartLocationScreen extends StatefulWidget {
   final GameLevel level;
@@ -84,9 +84,7 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
                             color: Colors.black54,
                             primary: false,
                             onPressed: () {
-                              final uri = Uri.parse(
-                                  'https://junctioneer.net/shapes-outdoor2/privacy-policy/');
-                              launchUrl(uri, mode: LaunchMode.inAppWebView);
+                              showPrivacyPolicy();
                             },
                           ),
                         ],
