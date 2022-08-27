@@ -43,6 +43,7 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
             ? 'Finding your location'
             : 'Location accesss'),
         backgroundColor: Theme.of(context).colorScheme.background,
+        shadowColor: Colors.transparent,
       ),
       body: Container(
         color: Theme.of(context).colorScheme.background,
