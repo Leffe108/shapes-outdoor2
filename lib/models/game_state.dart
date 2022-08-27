@@ -5,6 +5,13 @@ import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shapes_outdoor/utils/vibrate.dart';
 
+enum GameLevel {
+  mini,
+  neardy,
+  medium,
+  sprawl,
+}
+
 enum ShapeType {
   triangle,
   square,
@@ -71,6 +78,25 @@ class GameState extends ChangeNotifier {
   void abort() {
     _clear();
     notifyListeners();
+  }
+
+  void newGameFromLevel(LatLng center, GameLevel level) {
+    switch (level) {
+      case GameLevel.mini:
+        newGame(center, 2, 150, 150);
+        break;
+      case GameLevel.neardy:
+        newGame(center, 5, 200, 200);
+        break;
+      case GameLevel.medium:
+        newGame(center, 9, 250, 750);
+        break;
+      case GameLevel.sprawl:
+        newGame(center, 9, 250, 2500);
+        break;
+      default:
+        throw Exception('Unknown level');
+    }
   }
 
   /// Create a new game

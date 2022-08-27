@@ -1,0 +1,177 @@
+import 'package:flutter/material.dart';
+import 'package:latlong2/latlong.dart';
+import 'package:location/location.dart';
+import 'package:provider/provider.dart';
+import 'package:routemaster/routemaster.dart';
+import 'package:shapes_outdoor/models/game_state.dart';
+import 'package:shapes_outdoor/utils/alert_dialog.dart';
+import 'package:shapes_outdoor/utils/locate.dart';
+import 'package:shapes_outdoor/widgets/stadium_button.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+class StartLocationScreen extends StatefulWidget {
+  final GameLevel level;
+  const StartLocationScreen(this.level, {Key? key}) : super(key: key);
+
+  @override
+  State<StartLocationScreen> createState() => _StartLocationScreenState();
+}
+
+class _StartLocationScreenState extends State<StartLocationScreen> {
+  PermissionStatus? permissionStatus;
+
+  @override
+  void didChangeDependencies() {
+    if (permissionStatus == null) {
+      final l = Location.instance;
+      l.hasPermission().then((value) {
+        setState(() => permissionStatus = value);
+
+        if (permissionStatus == PermissionStatus.granted) {
+          locatePlayerAndStartGame();
+        }
+      });
+    }
+    super.didChangeDependencies();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(permissionStatus == PermissionStatus.granted
+            ? 'Finding your position'
+            : 'Location accesss'),
+        backgroundColor: Theme.of(context).colorScheme.background,
+      ),
+      body: Container(
+        color: Theme.of(context).colorScheme.background,
+        padding: const EdgeInsets.only(bottom: 20.0),
+        child: SafeArea(
+          child: Builder(builder: (context) {
+            if (permissionStatus == null ||
+                permissionStatus == PermissionStatus.granted) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            return Column(
+              children: [
+                Expanded(
+                  child: ListView(
+                    padding: const EdgeInsets.all(20),
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(
+                            Icons.pin_drop,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 15),
+                      const Text(
+                          'The objective of this game is to get out and catch virtual shapes in your suroundings.\n'
+                          '\n'
+                          'The game will place these shapes nearby where you are in the world and then track your location to see when you get close enough to them.\n'
+                          '\n'
+                          'Therefore, to play this game, you need to grant access to the device location.'),
+                      const SizedBox(height: 15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          StadiumButton(
+                            text: const Text('Privacy policy'),
+                            color: Colors.black54,
+                            primary: false,
+                            onPressed: () {
+                              final uri = Uri.parse(
+                                  'https://junctioneer.net/shapes-outdoor2/privacy-policy/');
+                              launchUrl(uri, mode: LaunchMode.inAppWebView);
+                            },
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                StadiumButton(
+                  text: const Text('Ok'),
+                  onPressed: () async {
+                    final l = Location.instance;
+                    final newStatus =
+                        permissionStatus == PermissionStatus.deniedForever
+                            ? PermissionStatus.deniedForever
+                            : await l.requestPermission();
+                    if (!mounted) return;
+                    if (newStatus == PermissionStatus.denied ||
+                        newStatus == PermissionStatus.deniedForever) {
+                      final router = Routemaster.of(context);
+                      await showAlert(
+                          context,
+                          const Text('Location access was denied'),
+                          const Text(
+                              'If you want to play this game, you have to go to the settings menu of your phone and enable location access for the game and then start a new game.'));
+                      router.pop();
+                      return;
+                    }
+
+                    setState(() {
+                      permissionStatus = newStatus;
+                    });
+
+                    locatePlayerAndStartGame();
+                  },
+                ),
+              ],
+            );
+          }),
+        ),
+      ),
+    );
+  }
+
+  Future<void> locatePlayerAndStartGame() async {
+    var state = Provider.of<GameState>(context, listen: false);
+
+    final pos = await locatePlayer();
+    if (pos == null || !mounted) {
+      return;
+    }
+
+    state.newGameFromLevel(pos, widget.level);
+    state.playerPos = pos;
+    Routemaster.of(context).push('/new-game/game');
+  }
+
+  Future<LatLng?> locatePlayer() async {
+    LocationData? location;
+    LatLng? pos;
+    try {
+      location = await getUserPosition();
+      pos = location.toLatLng();
+      if (pos == null) throw LocationDataError('');
+    } catch (e) {
+      if (!mounted) return null;
+      if (e is PermissionError) {
+        showAlert(
+            context,
+            const Text('No access'),
+            const Text(
+                'You need to grant access to location services to play this game.'));
+        return null;
+      } else if (e is LocationServiceError) {
+        showAlert(
+            context,
+            const Text('Location services is off'),
+            const Text(
+                'You need to turn on location services to play this game.'));
+        return null;
+      } else {
+        showAlert(context, const Text('Location error'),
+            Text('An error occured wile obtaining your position: $e'));
+        return null;
+      }
+    }
+    return null;
+  }
+}

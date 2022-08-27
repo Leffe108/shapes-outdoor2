@@ -68,6 +68,7 @@ class _GameMenuState extends State<GameMenu> {
           StadiumButton(
             text: const Text('Abort'),
             primary: false,
+            color: Colors.deepOrange,
             onPressed: () {
               final state = Provider.of<GameState>(context, listen: false);
               state.abort();
@@ -80,19 +81,19 @@ class _GameMenuState extends State<GameMenu> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: const [
-        NewGameButton(Text('Mini'), 2, 150, 150),
+        NewGameButton(Text('Mini'), GameLevel.mini),
         SizedBox(
           height: 20,
         ),
-        NewGameButton(Text('Nearby'), 5, 200, 200),
+        NewGameButton(Text('Nearby'), GameLevel.neardy),
         SizedBox(
           height: 20,
         ),
-        NewGameButton(Text(' Medium '), 9, 250, 750),
+        NewGameButton(Text(' Medium '), GameLevel.medium),
         SizedBox(
           height: 20,
         ),
-        NewGameButton(Text('         Sprawl         '), 9, 250, 2500),
+        NewGameButton(Text('         Sprawl         '), GameLevel.sprawl),
       ],
     );
   }
