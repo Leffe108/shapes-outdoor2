@@ -40,7 +40,7 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(permissionStatus == PermissionStatus.granted
-            ? 'Finding your position'
+            ? 'Finding your location'
             : 'Location accesss'),
         backgroundColor: Theme.of(context).colorScheme.background,
       ),
@@ -80,8 +80,18 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           StadiumButton(
-                            text: const Text('Privacy policy'),
-                            color: Colors.black54,
+                            text: Text(
+                              'Privacy policy',
+                              style: TextStyle(
+                                  color: Theme.of(context).brightness ==
+                                          Brightness.light
+                                      ? Colors.white
+                                      : Colors.grey[300]),
+                            ),
+                            color:
+                                Theme.of(context).brightness == Brightness.light
+                                    ? Colors.black54
+                                    : Colors.grey[700],
                             primary: false,
                             onPressed: () {
                               showPrivacyPolicy();
