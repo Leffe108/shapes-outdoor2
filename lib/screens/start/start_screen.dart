@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_fadein/flutter_fadein.dart';
 import 'package:routemaster/routemaster.dart';
+import 'package:shapes_outdoor/screens/start/widgets/app_version.dart';
 import 'package:shapes_outdoor/utils/privacy_policy.dart';
 import 'package:shapes_outdoor/utils/settings_dialog.dart';
 import 'package:shapes_outdoor/widgets/stadium_button.dart';
@@ -120,6 +121,13 @@ class StartScreen extends StatelessWidget {
                   applicationName: 'Shapes Outdoor 2',
                   context: context,
                   children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        AppVersion(),
+                      ],
+                    ),
+                    const SizedBox(height: 30),
                     StadiumButton(
                       text: const Text('Privacy Policy'),
                       onPressed: () {
