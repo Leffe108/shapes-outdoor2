@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-Future<void> showAlert(BuildContext context, Widget title, Widget message) {
+Future<void> showAlert(BuildContext context, Widget title, Widget message,
+    {String buttonText = 'Ok'}) {
   return showDialog(
     context: context,
     builder: (context) => AlertDialog(
@@ -9,7 +10,7 @@ Future<void> showAlert(BuildContext context, Widget title, Widget message) {
       actions: [
         TextButton(
           child: Text(
-            'Ok',
+            buttonText,
             style: Theme.of(context).textTheme.button,
           ),
           onPressed: () {
@@ -24,7 +25,12 @@ Future<void> showAlert(BuildContext context, Widget title, Widget message) {
 /// Shows a dialog with yes/no buttons. Resolves to true if
 /// user press Yes button, otherwise false.
 Future<bool> showYesNoDialog(
-    BuildContext context, Widget title, Widget message) async {
+  BuildContext context,
+  Widget title,
+  Widget message, {
+  String yesButtonText = 'Yes',
+  String noButtonText = 'No',
+}) async {
   final result = await showDialog<bool>(
     context: context,
     builder: (context) => AlertDialog(
@@ -33,7 +39,7 @@ Future<bool> showYesNoDialog(
       actions: [
         TextButton(
           child: Text(
-            'Yes',
+            yesButtonText,
             style: Theme.of(context).textTheme.button,
           ),
           onPressed: () {
@@ -42,7 +48,7 @@ Future<bool> showYesNoDialog(
         ),
         TextButton(
           child: Text(
-            'No',
+            noButtonText,
             style: Theme.of(context).textTheme.button,
           ),
           onPressed: () {
