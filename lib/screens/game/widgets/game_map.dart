@@ -17,20 +17,33 @@ class GameMap extends StatefulWidget {
 const _zoom = 14.0;
 
 class _GameMapState extends State<GameMap> {
-  MapController? controller;
+  late final MapController mapController;
+  bool mapReady = false;
   LatLng? center;
+
+  @override
+  void initState() {
+    mapController = MapController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    mapController.dispose();
+    super.dispose();
+  }
 
   @override
   void didChangeDependencies() {
     // Center map on new player position if it is outside
     // the bounds of the current viewport.
     final state = Provider.of<GameState>(context, listen: true);
-    if (center != state.playerPos && controller != null) {
+    if (center != state.playerPos && mapReady) {
       center = state.playerPos;
       if (center != null &&
-          controller!.bounds != null &&
-          !controller!.bounds!.contains(center)) {
-        controller!.move(center!, controller!.zoom);
+          mapController.bounds != null &&
+          !mapController.bounds!.contains(center)) {
+        mapController.move(center!, mapController.zoom);
       }
     }
 
@@ -46,12 +59,12 @@ class _GameMapState extends State<GameMap> {
         minWidth: 100,
       ),
       child: FlutterMap(
+        mapController: mapController,
         options: MapOptions(
           interactiveFlags: InteractiveFlag.all & ~InteractiveFlag.rotate,
-          controller: controller,
-          onMapCreated: (c) {
-            controller = c;
-          },
+          onMapReady: () => setState(() {
+            mapReady = true;
+          }),
           center: state.playerPos ?? LatLng(0, 0),
           bounds: _gameBounds(state),
           boundsOptions: const FitBoundsOptions(
@@ -83,36 +96,30 @@ class _GameMapState extends State<GameMap> {
           })
         ],
         children: [
-          TileLayerWidget(
-            options: TileLayerOptions(
-              userAgentPackageName: 'net.junctioneer.shapesoutdoor2',
-              urlTemplate: Theme.of(context).brightness == Brightness.light
-                  ? dotenv.env['MAP_URL']
-                  : dotenv.env['MAP_URL_DARK'],
-              subdomains: ['a', 'b', 'c'],
-              backgroundColor: Theme.of(context).brightness == Brightness.light
-                  ? const Color(0xFFE0E0E0)
-                  : Colors.black,
-            ),
+          TileLayer(
+            userAgentPackageName: 'net.junctioneer.shapesoutdoor2',
+            urlTemplate: Theme.of(context).brightness == Brightness.light
+                ? dotenv.env['MAP_URL']
+                : dotenv.env['MAP_URL_DARK'],
+            subdomains: const ['a', 'b', 'c'],
+            backgroundColor: Theme.of(context).brightness == Brightness.light
+                ? const Color(0xFFE0E0E0)
+                : Colors.black,
           ),
-          MarkerLayerWidget(
-            options: MarkerLayerOptions(
-              markers: [
-                playerMarker(context),
-              ],
-            ),
+          MarkerLayer(
+            markers: [
+              playerMarker(context),
+            ],
           ),
           Builder(
             builder: ((context) {
               final state = context.watch<GameState>();
-              return MarkerLayerWidget(
-                options: MarkerLayerOptions(
-                  key: ValueKey<String>('${state.points.length}'),
-                  markers: [
-                    for (var i = 0; i < state.points.length; i++)
-                      shapeMarker(state.points[i], i),
-                  ],
-                ),
+              return MarkerLayer(
+                key: ValueKey<String>('${state.points.length}'),
+                markers: [
+                  for (var i = 0; i < state.points.length; i++)
+                    shapeMarker(state.points[i], i),
+                ],
               );
             }),
           )
