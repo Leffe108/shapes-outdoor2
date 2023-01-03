@@ -10,9 +10,9 @@ To collect a shape, walk there so that you are in close proximity to the locatio
 
 You can opt-in to background mode in which case you do not need to open the app to collect shapes, as long as you remember where to go.
 
-![Intro screen](screenshots/intro.jpg)
-![Select level screen](screenshots/select_level.png)
-![Game screen](screenshots/game.jpg)
+[![Intro screen](screenshots/intro-small.jpg)](screenshots/intro.jpg)
+[![Select level screen](screenshots/select_level-small.png)](screenshots/select_level.png)
+[![Game screen](screenshots/game-small.jpg)](screenshots/game.jpg)
 
 ## Build
 ### Create .env
