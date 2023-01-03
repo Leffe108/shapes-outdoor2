@@ -10,6 +10,8 @@ import 'package:shapes_outdoor/utils/settings_dialog.dart';
 class GameScreen extends StatelessWidget {
   const GameScreen({Key? key}) : super(key: key);
 
+  static const titleKey = Key('GAME_TITLE');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,7 +29,7 @@ class GameScreen extends StatelessWidget {
           final s = nextShape != null
               ? 'Go to a ${nextShape.toString().split('.').last}'
               : 'Collect shapes';
-          return Text(s);
+          return Text(s, key: titleKey);
         }),
         actions: [
           IconButton(

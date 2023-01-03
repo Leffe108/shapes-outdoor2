@@ -5,17 +5,19 @@ class Settings {
   ValueNotifier<bool> backgroundLocation = ValueNotifier<bool>(false);
   ValueNotifier<bool> vibrate = ValueNotifier<bool>(true);
 
-  Settings() {
-    _load();
+  Settings({useSharedPreferences = true}) {
+    if (useSharedPreferences) {
+      _load();
 
-    backgroundLocation.addListener(() async {
-      final store = await SharedPreferences.getInstance();
-      store.setBool(_bglocKey, backgroundLocation.value);
-    });
-    vibrate.addListener(() async {
-      final store = await SharedPreferences.getInstance();
-      store.setBool(_vibrateKey, vibrate.value);
-    });
+      backgroundLocation.addListener(() async {
+        final store = await SharedPreferences.getInstance();
+        store.setBool(_bglocKey, backgroundLocation.value);
+      });
+      vibrate.addListener(() async {
+        final store = await SharedPreferences.getInstance();
+        store.setBool(_vibrateKey, vibrate.value);
+      });
+    }
   }
 
   Future<void> _load() async {

@@ -4,11 +4,13 @@ import 'package:shapes_outdoor/screens/new_game/widgets/game_menu.dart';
 class NewGameScreen extends StatelessWidget {
   const NewGameScreen({Key? key}) : super(key: key);
 
+  static const titleKey = Key('NEW_GAME_TITLE');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Select level'),
+        title: const Text('Select level', key: titleKey),
         centerTitle: true,
         backgroundColor: Theme.of(context).colorScheme.background,
         shadowColor: Colors.transparent,

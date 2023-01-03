@@ -227,7 +227,7 @@ packages:
     source: hosted
     version: "4.4.0"
   location_platform_interface:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: location_platform_interface
       url: "https://pub.dartlang.org"
@@ -332,7 +332,7 @@ packages:
     source: hosted
     version: "3.1.0"
   plugin_platform_interface:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: plugin_platform_interface
       url: "https://pub.dartlang.org"

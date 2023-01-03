@@ -13,6 +13,9 @@ class StartLocationScreen extends StatefulWidget {
   final GameLevel level;
   const StartLocationScreen(this.level, {Key? key}) : super(key: key);
 
+  static const locationAccessTitleKey = Key('START_LOCATION_ACCESS_TITLE');
+  static const findPositionTitleKey = Key('START_LOCATION_FIND_TITLE');
+
   @override
   State<StartLocationScreen> createState() => _StartLocationScreenState();
 }
@@ -39,9 +42,14 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(permissionStatus == PermissionStatus.granted
-            ? 'Finding your location'
-            : 'Location accesss'),
+        title: Text(
+          permissionStatus == PermissionStatus.granted
+              ? 'Finding your location'
+              : 'Location accesss',
+          key: permissionStatus == PermissionStatus.granted
+              ? StartLocationScreen.findPositionTitleKey
+              : StartLocationScreen.locationAccessTitleKey,
+        ),
         backgroundColor: Theme.of(context).colorScheme.background,
         shadowColor: Colors.transparent,
       ),

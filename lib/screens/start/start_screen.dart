@@ -9,6 +9,12 @@ import 'package:shapes_outdoor/widgets/stadium_button.dart';
 class StartScreen extends StatelessWidget {
   const StartScreen({Key? key}) : super(key: key);
 
+  static const titleKey = Key('START_TITLE_KEY');
+  static const startGameKey = Key('START_START_GAME');
+  static const aboutKey = Key('START_ABOUT');
+  static const settingsKey = Key('START_SETTINGS');
+  static const aboutDialogKey = Key('START_ABOUT_DIALOG');
+
   @override
   Widget build(BuildContext context) {
     final mq = MediaQuery.of(context);
@@ -36,6 +42,7 @@ class StartScreen extends StatelessWidget {
                       Text(
                         'Shapes Outdoor',
                         style: Theme.of(context).textTheme.headlineSmall,
+                        key: titleKey,
                       ),
                       Expanded(child: Container()),
                       const SizedBox(height: 30),
@@ -82,6 +89,7 @@ class StartScreen extends StatelessWidget {
                       const SizedBox(height: 20),
                       Expanded(child: Container()),
                       StadiumButton(
+                        key: startGameKey,
                         text: const Text('Start game'),
                         onPressed: () {
                           Routemaster.of(context).push('/new-game');
@@ -109,6 +117,7 @@ class StartScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           IconButton(
+            key: settingsKey,
             icon: const Icon(Icons.settings),
             tooltip: 'Settings',
             onPressed: () {
@@ -116,6 +125,7 @@ class StartScreen extends StatelessWidget {
             },
           ),
           IconButton(
+            key: aboutKey,
             icon: const Icon(Icons.question_mark),
             tooltip: 'About',
             onPressed: () {
@@ -124,6 +134,7 @@ class StartScreen extends StatelessWidget {
                   context: context,
                   children: [
                     Row(
+                      key: aboutDialogKey,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: const [
                         AppVersion(),
