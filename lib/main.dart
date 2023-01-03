@@ -10,7 +10,19 @@ import 'package:shapes_outdoor/theme/app_theme.dart';
 
 void main() async {
   await dotenv.load(fileName: ".env");
-  runApp(const MyApp());
+
+  final settings = Settings();
+  final vibration = Vibration(setting: settings.vibrate);
+
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(
+        create: (context) => GameState(vibration: vibration),
+      ),
+      Provider<Settings>.value(value: settings),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -18,23 +30,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final settings = Settings();
-    final vibration = Vibration(setting: settings.vibrate);
-
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => GameState(vibration: vibration),
-        ),
-        Provider<Settings>(create: (context) => settings),
-      ],
-      child: MaterialApp.router(
-        title: 'Flutter Demo',
-        theme: buildAppTheme(dark: false),
-        darkTheme: buildAppTheme(dark: true),
-        routerDelegate: appRouter(),
-        routeInformationParser: const RoutemasterParser(),
-      ),
+    return MaterialApp.router(
+      title: 'Flutter Demo',
+      theme: buildAppTheme(dark: false),
+      darkTheme: buildAppTheme(dark: true),
+      routerDelegate: appRouter(),
+      routeInformationParser: const RoutemasterParser(),
     );
   }
 }

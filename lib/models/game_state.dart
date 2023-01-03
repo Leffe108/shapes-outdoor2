@@ -221,6 +221,23 @@ class GameState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Mock that the collect timer has completed
+  /// No-op if collect timer has not started yet.
+  void mockCollectTimerCompleted() {
+    if (_enterPoint == null) {
+      return;
+    }
+
+    // Modify time when collection started
+    // so that collectTime will have eslapted
+    _enterPoint = DateTime.now()
+        .subtract(collectTime)
+        .subtract(const Duration(milliseconds: 1));
+
+    // call playerPos setter
+    playerPos = _playerPos;
+  }
+
   /// Collect the point at given index in _points
   void _collectIndex(int index) {
     _shapes.remove(_points[index].shape);
