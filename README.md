@@ -1,5 +1,5 @@
 # Shapes Outdoor 2
-A Flutter remake of shapes-outdoor.
+A Flutter remake of [shapes-outdoor](https://github.com/Leffe108/shapes-outdoor).
 
 ## Game overview
 When the game starts, geometric shapes will be placed at some direction and distance from your current location. How far and the count vary by the selected game level.
