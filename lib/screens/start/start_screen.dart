@@ -120,7 +120,7 @@ class StartScreen extends StatelessWidget {
             tooltip: 'About',
             onPressed: () {
               showAboutDialog(
-                  applicationName: 'Shapes Outdoor 2',
+                  applicationName: 'Shapes Outdoor',
                   context: context,
                   children: [
                     Row(
