@@ -110,12 +110,14 @@ class StartScreen extends StatelessWidget {
         children: [
           IconButton(
             icon: const Icon(Icons.settings),
+            tooltip: 'Settings',
             onPressed: () {
               showSettingsDialog(context, inGame: false);
             },
           ),
           IconButton(
             icon: const Icon(Icons.question_mark),
+            tooltip: 'About',
             onPressed: () {
               showAboutDialog(
                   applicationName: 'Shapes Outdoor 2',
