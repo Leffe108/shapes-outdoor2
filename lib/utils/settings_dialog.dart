@@ -47,8 +47,8 @@ Future<void> showSettingsDialog(
                               //  \n\nEnabling this will allow you to walk to a shape with the phone locked and sense a soft vibration when you walk in radius and then a stronger vibration when the shape has been collected.
                             ],
                           ),
-                          yesButtonText: 'Yes',
-                          noButtonText: 'Abort',
+                          yesButtonText: 'YES',
+                          noButtonText: 'ABORT',
                         )) {
                           return;
                         }
@@ -73,6 +73,6 @@ Future<void> showSettingsDialog(
         );
       },
     ),
-    buttonText: 'Close',
+    buttonText: 'CLOSE',
   );
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 Future<void> showAlert(BuildContext context, Widget title, Widget message,
-    {String buttonText = 'Ok'}) {
+    {String buttonText = 'OK'}) {
   return showDialog(
     context: context,
     builder: (context) => AlertDialog(
@@ -28,8 +28,8 @@ Future<bool> showYesNoDialog(
   BuildContext context,
   Widget title,
   Widget message, {
-  String yesButtonText = 'Yes',
-  String noButtonText = 'No',
+  String yesButtonText = 'YES',
+  String noButtonText = 'NO',
 }) async {
   final result = await showDialog<bool>(
     context: context,
