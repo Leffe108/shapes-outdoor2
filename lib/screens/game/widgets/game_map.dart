@@ -96,16 +96,17 @@ class _GameMapState extends State<GameMap> {
           })
         ],
         children: [
-          TileLayer(
-            userAgentPackageName: 'net.junctioneer.shapesoutdoor2',
-            urlTemplate: Theme.of(context).brightness == Brightness.light
-                ? dotenv.env['MAP_URL']
-                : dotenv.env['MAP_URL_DARK'],
-            subdomains: const ['a', 'b', 'c'],
-            backgroundColor: Theme.of(context).brightness == Brightness.light
-                ? const Color(0xFFE0E0E0)
-                : Colors.black,
-          ),
+          if (dotenv.isInitialized)
+            TileLayer(
+              userAgentPackageName: 'net.junctioneer.shapesoutdoor2',
+              urlTemplate: Theme.of(context).brightness == Brightness.light
+                  ? dotenv.env['MAP_URL']
+                  : dotenv.env['MAP_URL_DARK'],
+              subdomains: const ['a', 'b', 'c'],
+              backgroundColor: Theme.of(context).brightness == Brightness.light
+                  ? const Color(0xFFE0E0E0)
+                  : Colors.black,
+            ),
           MarkerLayer(
             markers: [
               playerMarker(context),
