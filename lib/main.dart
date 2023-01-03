@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
 import 'package:shapes_outdoor/models/game_state.dart';
 import 'package:shapes_outdoor/models/settings.dart';
+import 'package:shapes_outdoor/models/vibration.dart';
 import 'package:shapes_outdoor/router/app_router.dart';
 import 'package:shapes_outdoor/theme/app_theme.dart';
 
@@ -17,10 +18,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final settings = Settings();
+    final vibration = Vibration(setting: settings.vibrate);
+
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => GameState()),
-        Provider<Settings>(create: (context) => Settings()),
+        ChangeNotifierProvider(
+          create: (context) => GameState(vibration: vibration),
+        ),
+        Provider<Settings>(create: (context) => settings),
       ],
       child: MaterialApp.router(
         title: 'Flutter Demo',
