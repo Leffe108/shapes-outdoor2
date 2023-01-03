@@ -33,7 +33,7 @@ class GameScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.settings),
             onPressed: () {
-              showSettingsDialog(context);
+              showSettingsDialog(context, inGame: true);
             },
           ),
         ],

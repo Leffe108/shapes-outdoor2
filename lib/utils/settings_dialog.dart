@@ -4,7 +4,10 @@ import 'package:shapes_outdoor/models/settings.dart';
 import 'package:shapes_outdoor/utils/alert_dialog.dart';
 
 /// Shows settings dialog
-Future<void> showSettingsDialog(BuildContext context) async {
+Future<void> showSettingsDialog(
+  BuildContext context, {
+  required bool inGame,
+}) async {
   showAlert(
     context,
     const Text('Settings'),
@@ -23,6 +26,15 @@ Future<void> showSettingsDialog(BuildContext context) async {
                       final setting =
                           context.read<Settings>().backgroundLocation;
                       if (newValue) {
+                        if (!inGame) {
+                          showAlert(
+                            context,
+                            const Text('Only in-game'),
+                            const Text(
+                                'You can only enable background location when you are in a game'),
+                          );
+                          return;
+                        }
                         if (!await showYesNoDialog(
                           context,
                           const Text('Collect shapes in background?'),
