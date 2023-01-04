@@ -11,6 +11,7 @@ class GameScreen extends StatelessWidget {
   const GameScreen({Key? key}) : super(key: key);
 
   static const titleKey = Key('GAME_TITLE');
+  static const closeKey = Key('GAME_CLOSE');
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +22,7 @@ class GameScreen extends StatelessWidget {
           onPressed: () {
             Routemaster.of(context).pop();
           },
+          key: closeKey,
         ),
         title: Builder(builder: (context) {
           final nextShape = context.select<GameState, ShapeType?>(

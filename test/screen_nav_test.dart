@@ -106,6 +106,26 @@ void main() {
     expect(find.byKey(GameScreen.titleKey), findsOneWidget);
     expect(gameState.nextShape, isNotNull);
     expect(gameState.playerPos, isNotNull);
+
+    // Close the game - game menu should offert to abort the game
+    await tester.tap(find.byKey(GameScreen.closeKey));
+    await tester.pumpAndSettle();
+    expect(find.byKey(GameMenu.abortGameKey), findsOneWidget);
+    expect(find.byKey(GameMenu.resumeGameKey), findsOneWidget);
+
+    // Resume game and then go back to menu again
+    await tester.tap(find.byKey(GameMenu.resumeGameKey));
+    await tester.pumpAndSettle();
+    expect(find.byKey(GameScreen.titleKey), findsOneWidget);
+    await tester.tap(find.byKey(GameScreen.closeKey));
+    await tester.pumpAndSettle();
+    expect(find.byKey(GameMenu.abortGameKey), findsOneWidget);
+    expect(find.byKey(GameMenu.resumeGameKey), findsOneWidget);
+
+    // Abort game - should then be offered to start new game
+    await tester.tap(find.byKey(GameMenu.abortGameKey));
+    await tester.pumpAndSettle();
+    expect(find.byKey(GameMenu.miniKey), findsOneWidget);
   });
 }
 

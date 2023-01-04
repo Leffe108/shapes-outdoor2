@@ -10,6 +10,8 @@ class GameMenu extends StatefulWidget {
   const GameMenu({Key? key}) : super(key: key);
 
   static const miniKey = Key('NEW_GAME_MINI');
+  static const abortGameKey = Key('NEW_GAME_ABORT_GAME');
+  static const resumeGameKey = Key('NEW_GAME_RESUME_GAME');
 
   @override
   State<GameMenu> createState() => _GameMenuState();
@@ -38,6 +40,7 @@ class _GameMenuState extends State<GameMenu> {
             onPressed: () {
               Routemaster.of(context).push('/new-game/game');
             },
+            key: GameMenu.resumeGameKey,
           ),
           const SizedBox(
             height: 50,
@@ -50,6 +53,7 @@ class _GameMenuState extends State<GameMenu> {
               final state = Provider.of<GameState>(context, listen: false);
               state.abort();
             },
+            key: GameMenu.abortGameKey,
           ),
         ],
       );
