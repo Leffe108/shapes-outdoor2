@@ -17,7 +17,7 @@ class StadiumButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: color ?? Theme.of(context).colorScheme.primary,
+        backgroundColor: color ?? Theme.of(context).colorScheme.primary,
         shape: const StadiumBorder(),
         visualDensity: VisualDensity.comfortable,
         textStyle: TextStyle(fontSize: primary ? 16 : 12),
