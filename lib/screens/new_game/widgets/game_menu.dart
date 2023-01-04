@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:routemaster/routemaster.dart';
@@ -18,16 +20,50 @@ class GameMenu extends StatefulWidget {
 }
 
 class _GameMenuState extends State<GameMenu> {
+  bool _showResume = false;
+  Timer? _timer;
+
+  @override
+  void didChangeDependencies() {
+    updateShowResume();
+    super.didChangeDependencies();
+  }
+
+  @override
+  void didUpdateWidget(covariant GameMenu oldWidget) {
+    updateShowResume();
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
+  void dispose() {
+    if (_timer != null) {
+      _timer!.cancel();
+    }
+    super.dispose();
+  }
+
+  void updateShowResume() {
+    final state = Provider.of<GameState>(context, listen: true);
+    final inProgress = state.gameDuration != null;
+    if (inProgress && !_showResume) {
+      _timer = Timer(const Duration(milliseconds: 500), () {
+        if (!mounted) return;
+        setState(() {
+          _showResume = inProgress;
+          _timer = null;
+        });
+      });
+    } else if (!inProgress && _showResume) {
+      setState(() {
+        _showResume = inProgress;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    // The purpose of the 500ms limit is to not show the resume button
-    // for the short duration when app transitions into the game screen.
-    // Therefore it is fine that the UI is not responsive to when the 500ms
-    // mark has been passed.
-    final state = Provider.of<GameState>(context, listen: true);
-    final inProgress =
-        state.gameDuration != null && state.gameDuration!.inMilliseconds >= 500;
-    if (inProgress) {
+    if (_showResume) {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
