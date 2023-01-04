@@ -17,5 +17,6 @@ jobs:
     - uses: subosito/flutter-action@v1
       with:
         channel: 'stable' # or: 'dev' or 'stable'
+    - run: touch .env
     - run: flutter pub get
     - run: flutter test
