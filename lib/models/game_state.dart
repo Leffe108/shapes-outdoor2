@@ -274,8 +274,8 @@ class GameState extends ChangeNotifier {
 }
 
 class _ClosestPointDist {
-  late int index;
-  late double distM;
+  int index;
+  double distM;
 
   _ClosestPointDist(this.index, this.distM);
 }
