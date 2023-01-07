@@ -8,6 +8,12 @@ import 'package:shapes_outdoor/models/settings.dart';
 import 'package:shapes_outdoor/utils/locate.dart';
 
 /// Watches current position and updates GameState.playerPos.
+///
+/// Also listens to background location setting and forwards
+/// this to location plugin.
+///
+/// In background mode, this widget also updates the sticky
+/// notification in android to show the next shape to collect.
 class LocationWatcher extends StatefulWidget {
   const LocationWatcher({Key? key}) : super(key: key);
 
