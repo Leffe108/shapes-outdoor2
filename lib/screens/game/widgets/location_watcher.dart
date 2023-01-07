@@ -37,7 +37,6 @@ class _LocationWatcherState extends State<LocationWatcher> {
     _stream = l.onLocationChanged;
     _streamSubscription = _stream.listen(
       (location) {
-        print('new position: ${location.latitude}, ${location.longitude}');
         final pos = location.toLatLng();
         if (pos != null) {
           final state = Provider.of<GameState>(context, listen: false);
