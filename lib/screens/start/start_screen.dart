@@ -6,6 +6,7 @@ import 'package:shapes_outdoor/utils/privacy_policy.dart';
 import 'package:shapes_outdoor/utils/settings_dialog.dart';
 import 'package:shapes_outdoor/widgets/stadium_button.dart';
 
+/// This is the home screen of the app
 class StartScreen extends StatelessWidget {
   const StartScreen({Key? key}) : super(key: key);
 

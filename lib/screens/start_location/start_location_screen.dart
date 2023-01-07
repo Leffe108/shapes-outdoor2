@@ -9,6 +9,10 @@ import 'package:shapes_outdoor/utils/locate.dart';
 import 'package:shapes_outdoor/utils/privacy_policy.dart';
 import 'package:shapes_outdoor/widgets/stadium_button.dart';
 
+/// Screen responsible for obtaining permission to access location
+/// and for obtaining the start location of a new game.
+/// When location has been obtained, it starts the game in GameState
+/// and navigates to GameScreen.
 class StartLocationScreen extends StatefulWidget {
   final GameLevel level;
   const StartLocationScreen(this.level, {Key? key}) : super(key: key);
