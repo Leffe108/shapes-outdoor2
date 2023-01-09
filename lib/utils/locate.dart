@@ -10,13 +10,6 @@ class PermissionError extends Exception {
   }
 }
 
-// Location services is not on
-class LocationServiceError extends Exception {
-  factory LocationServiceError(String message) {
-    return LocationServiceError(message);
-  }
-}
-
 // An unknown error occured while receiving position
 class LocationDataError extends Exception {
   factory LocationDataError(String message) {
@@ -25,20 +18,14 @@ class LocationDataError extends Exception {
 }
 
 Future<LocationData> getUserPosition() async {
-  final l = Location.instance;
-  final status = await l.requestPermission();
-  if (status != PermissionStatus.granted) {
+  final status = await requestPermission();
+  if (!isGranted(status)) {
     throw PermissionError(status.toString());
   }
 
-  final service = await l.requestService();
-  if (!service) {
-    throw LocationServiceError('');
-  }
-
-  var pos = LocationData.fromMap({});
+  var pos = LocationData();
   try {
-    pos = await l.getLocation();
+    pos = await getLocation();
   } catch (e) {
     throw LocationDataError('getLocation exception: $e');
   }
@@ -56,4 +43,11 @@ extension LocationDataToLatLng on LocationData {
     }
     return null;
   }
+}
+
+bool isGranted(PermissionStatus? value) {
+  return [
+    PermissionStatus.authorizedAlways,
+    PermissionStatus.authorizedWhenInUse
+  ].contains(value);
 }

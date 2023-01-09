@@ -30,11 +30,10 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
   @override
   void didChangeDependencies() {
     if (permissionStatus == null) {
-      final l = Location.instance;
-      l.hasPermission().then((value) {
+      getPermissionStatus().then((value) {
         setState(() => permissionStatus = value);
 
-        if (permissionStatus == PermissionStatus.granted) {
+        if (isGranted(value)) {
           locatePlayerAndStartGame();
         }
       });
@@ -47,10 +46,10 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          permissionStatus == PermissionStatus.granted
+          isGranted(permissionStatus)
               ? 'Finding your location'
               : 'Location accesss',
-          key: permissionStatus == PermissionStatus.granted
+          key: isGranted(permissionStatus)
               ? StartLocationScreen.findPositionTitleKey
               : StartLocationScreen.locationAccessTitleKey,
         ),
@@ -62,8 +61,7 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
         padding: const EdgeInsets.only(bottom: 20.0),
         child: SafeArea(
           child: Builder(builder: (context) {
-            if (permissionStatus == null ||
-                permissionStatus == PermissionStatus.granted) {
+            if (permissionStatus == null || isGranted(permissionStatus)) {
               return const Center(child: CircularProgressIndicator());
             }
 
@@ -118,14 +116,9 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
                 StadiumButton(
                   text: const Text('Ok'),
                   onPressed: () async {
-                    final l = Location.instance;
-                    final newStatus =
-                        permissionStatus == PermissionStatus.deniedForever
-                            ? PermissionStatus.deniedForever
-                            : await l.requestPermission();
+                    final newStatus = await requestPermission();
                     if (!mounted) return;
-                    if (newStatus == PermissionStatus.denied ||
-                        newStatus == PermissionStatus.deniedForever) {
+                    if (newStatus == PermissionStatus.denied) {
                       final router = Routemaster.of(context);
                       await showAlert(
                           context,
@@ -184,13 +177,6 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
             const Text('No access'),
             const Text(
                 'You need to grant access to location services to play this game.'));
-        return null;
-      } else if (e is LocationServiceError) {
-        showAlert(
-            context,
-            const Text('Location services is off'),
-            const Text(
-                'You need to turn on location services to play this game.'));
         return null;
       } else {
         showAlert(context, const Text('Location error'),

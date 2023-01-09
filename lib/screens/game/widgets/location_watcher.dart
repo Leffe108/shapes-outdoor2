@@ -25,22 +25,24 @@ class _LocationWatcherState extends State<LocationWatcher> {
   late Stream<LocationData> _stream;
   late StreamSubscription<LocationData> _streamSubscription;
   late Settings _settings;
+  late bool _background;
   ShapeType? _lastNextShape;
 
   @override
   void initState() {
+    super.initState();
     _settings = Provider.of<Settings>(context, listen: false);
-    final l = Location.instance;
+    _background = _settings.backgroundLocation.value;
 
     // Listen to backgroundLocation setting to turn on/off
     // background mode in the lifetime of the LocationWatcher.
-    _settings.backgroundLocation.addListener(_bgLocSettingChanged);
+    _settings.backgroundLocation.addListener(_restartStream);
 
-    // Enable background mode if backgroundLocation setting is enabled.
-    _bgLocSettingChanged();
+    _startStream();
+  }
 
-    // Listen to location stream (watch position)
-    _stream = l.onLocationChanged;
+  _startStream() {
+    _stream = onLocationChanged(inBackground: _background);
     _streamSubscription = _stream.listen(
       (location) {
         final pos = location.toLatLng();
@@ -52,21 +54,18 @@ class _LocationWatcherState extends State<LocationWatcher> {
       onDone: () => _stop(),
       onError: (Object error) => _stop(),
     );
-    super.initState();
   }
 
-  /// Turn on/off background mode based on current setting value
-  _bgLocSettingChanged() {
-    final l = Location.instance;
-    l.enableBackgroundMode(enable: _settings.backgroundLocation.value);
+  /// Restart listening to locations with current _background state
+  _restartStream() {
+    _streamSubscription.cancel();
+    _startStream();
   }
 
-  /// Stop listeners and turn off background mode
+  /// Stop all listeners (so stream may not be re-started by an event)
   _stop() {
     _streamSubscription.cancel();
-    _settings.backgroundLocation.removeListener(_bgLocSettingChanged);
-    final l = Location.instance;
-    l.enableBackgroundMode(enable: false);
+    _settings.backgroundLocation.removeListener(_restartStream);
   }
 
   @override
@@ -83,8 +82,7 @@ class _LocationWatcherState extends State<LocationWatcher> {
           ? 'notification_${nextShape.toString().split('.').last}'
           : 'triangle';
 
-      final l = Location.instance;
-      l.changeNotificationOptions(
+      updateBackgroundNotification(
         title: 'Collect shapes in background',
         subtitle: 'Go to settings in Shapes Outdoor to disable.',
         color: Theme.of(context).colorScheme.primary,

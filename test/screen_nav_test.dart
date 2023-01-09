@@ -8,7 +8,7 @@
 import 'dart:ui';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:location_platform_interface/location_platform_interface.dart';
+import 'package:location/location.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +41,7 @@ void main() {
       installerStore: '',
     );
 
-    LocationPlatform.instance = MockLocationPlatform();
+    setLocationInstance(MockLocationPlatform());
 
     // Build our app and trigger a frame.
     await tester.binding.setSurfaceSize(const Size(400, 800));
@@ -133,52 +133,50 @@ class MockLocationPlatform
     with MockPlatformInterfaceMixin
     implements LocationPlatform {
   bool _hasPermission = false;
-  bool _hasService = false;
 
   @override
-  Future<PermissionStatus> hasPermission() async {
-    return _hasPermission ? PermissionStatus.granted : PermissionStatus.denied;
+  Future<PermissionStatus?> getPermissionStatus() async {
+    return _hasPermission
+        ? PermissionStatus.authorizedAlways
+        : PermissionStatus.denied;
   }
 
   @override
   Future<PermissionStatus> requestPermission() async {
     _hasPermission = true;
-    return PermissionStatus.granted;
+    return PermissionStatus.authorizedAlways;
   }
 
   @override
-  Future<bool> serviceEnabled() async => _hasService;
-
-  @override
-  Future<bool> requestService() async {
-    _hasService = true;
-    return true;
-  }
-
-  @override
-  Future<LocationData> getLocation() async => Future.delayed(
+  Future<LocationData?> getLocation({LocationSettings? settings}) async =>
+      Future.delayed(
         const Duration(milliseconds: 50),
-        () => LocationData.fromMap({
-          'latitude': 0.0,
-          'longitude': 0.0,
-          'isMock': 1,
-        }),
+        () => LocationData(
+          latitude: 0.0,
+          longitude: 0.0,
+          isMock: true,
+        ),
       );
 
   @override
-  Future<bool> isBackgroundModeEnabled() async => false;
-
-  @override
-  Future<bool> enableBackgroundMode({bool? enable}) async => false;
-
-  @override
-  Stream<LocationData> get onLocationChanged async* {
+  Stream<LocationData?> onLocationChanged({
+    bool inBackground = false,
+  }) async* {
     final loc = await getLocation();
     yield loc;
   }
 
   @override
-  Future<AndroidNotificationData?> changeNotificationOptions({
+  Future<bool?> isGPSEnabled() async => true;
+
+  @override
+  Future<bool?> isNetworkEnabled() async => true;
+
+  @override
+  Future<bool?> setLocationSettings(LocationSettings settings) async => true;
+
+  @override
+  Future<bool?> updateBackgroundNotification({
     String? channelName,
     String? title,
     String? iconName,
@@ -187,15 +185,6 @@ class MockLocationPlatform
     Color? color,
     bool? onTapBringToFront,
   }) async {
-    return null;
-  }
-
-  @override
-  Future<bool> changeSettings({
-    LocationAccuracy? accuracy,
-    int? interval,
-    double? distanceFilter,
-  }) async {
-    return false;
+    return true;
   }
 }
