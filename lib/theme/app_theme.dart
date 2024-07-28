@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 ThemeData buildAppTheme({required bool dark}) {
-  var theme = dark
+  final theme = dark
       // Dark theme base
       ? _dark()
       // Light theme base
@@ -15,14 +15,13 @@ ThemeData buildAppTheme({required bool dark}) {
     visualDensity: VisualDensity.adaptivePlatformDensity,
 
     // Make SwitchListTile use primary color and not default teal color
-    toggleableActiveColor: theme.colorScheme.primary,
     switchTheme: SwitchThemeData(
-      thumbColor: MaterialStateProperty.all(theme.colorScheme.primary),
+      thumbColor: WidgetStateProperty.all(theme.colorScheme.primary),
     ),
   );
 }
 
-_light() {
+ThemeData _light() {
   final bgColor = Colors.green[200];
 
   return ThemeData(
@@ -30,9 +29,9 @@ _light() {
     colorScheme: ColorScheme.fromSwatch(
       brightness: Brightness.light,
       primarySwatch: Colors.green,
-      backgroundColor: bgColor,
       accentColor: Colors.blue[600],
     ),
+    scaffoldBackgroundColor: bgColor,
     appBarTheme: AppBarTheme(
       backgroundColor: bgColor,
       foregroundColor: Colors.grey[900],
@@ -40,7 +39,7 @@ _light() {
   );
 }
 
-_dark() {
+ThemeData _dark() {
   final bgColor = Color.lerp(
       Color.lerp(Colors.green[900]!, Colors.brown, 0.3), Colors.black, 0.5);
 
@@ -48,10 +47,10 @@ _dark() {
     brightness: Brightness.dark,
     colorScheme: ColorScheme.fromSeed(
       seedColor: Colors.green[700]!,
-      background: bgColor,
       brightness: Brightness.dark,
       secondary: Colors.blue[600],
     ),
+    scaffoldBackgroundColor: bgColor,
     appBarTheme: AppBarTheme(
       backgroundColor: bgColor,
       foregroundColor: Colors.white,

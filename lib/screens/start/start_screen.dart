@@ -26,7 +26,7 @@ class StartScreen extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.fromLTRB(iconMargin, margin, iconMargin,
             mq.size.height > 700 ? margin : iconMargin),
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).scaffoldBackgroundColor,
         child: SafeArea(
           child: Column(
             mainAxisSize: MainAxisSize.max,
@@ -134,10 +134,10 @@ class StartScreen extends StatelessWidget {
                   applicationName: 'Shapes Outdoor',
                   context: context,
                   children: [
-                    Row(
+                    const Row(
                       key: aboutDialogKey,
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: const [
+                      children: [
                         AppVersion(),
                       ],
                     ),

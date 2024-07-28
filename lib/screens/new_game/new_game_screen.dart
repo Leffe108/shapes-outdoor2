@@ -12,17 +12,17 @@ class NewGameScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Select level', key: titleKey),
         centerTitle: true,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         shadowColor: Colors.transparent,
       ),
       body: Container(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).scaffoldBackgroundColor,
         padding: const EdgeInsets.all(50.0),
-        child: SafeArea(
+        child: const SafeArea(
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              children: const [
+              children: [
                 Expanded(
                   child: GameMenu(),
                 ),

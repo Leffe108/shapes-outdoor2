@@ -5,8 +5,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   test('Settings', () async {
     // Wipe shared preferences before test
-    final store = await SharedPreferences.getInstance();
-    await store.clear();
+    TestWidgetsFlutterBinding.ensureInitialized();
+    SharedPreferences.setMockInitialValues({});
 
     final model = Settings();
     await pumpEventQueue();

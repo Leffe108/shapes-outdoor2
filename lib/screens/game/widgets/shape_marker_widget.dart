@@ -51,7 +51,7 @@ class ShapeMarkerWidget extends StatelessWidget {
                   style: TextButton.styleFrom(
                     minimumSize: Size(size, size),
                     maximumSize: Size(size, size),
-                    primary: color,
+                    foregroundColor: color,
                     shape: const CircleBorder(),
                   ),
                   child: textWidget,

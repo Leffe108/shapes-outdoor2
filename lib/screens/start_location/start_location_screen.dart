@@ -30,7 +30,7 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
   @override
   void didChangeDependencies() {
     if (permissionStatus == null) {
-      getPermissionStatus().then((value) {
+      Location().hasPermission().then((value) {
         setState(() => permissionStatus = value);
 
         if (isGranted(value)) {
@@ -53,11 +53,11 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
               ? StartLocationScreen.findPositionTitleKey
               : StartLocationScreen.locationAccessTitleKey,
         ),
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).colorScheme.surface,
         shadowColor: Colors.transparent,
       ),
       body: Container(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surface,
         padding: const EdgeInsets.only(bottom: 20.0),
         child: SafeArea(
           child: Builder(builder: (context) {
@@ -71,9 +71,9 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
                   child: ListView(
                     padding: const EdgeInsets.all(20),
                     children: [
-                      Row(
+                      const Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(
                             Icons.pin_drop,
                           ),
@@ -116,8 +116,8 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
                 StadiumButton(
                   text: const Text('Ok'),
                   onPressed: () async {
-                    final newStatus = await requestPermission();
-                    if (!mounted) return;
+                    final newStatus = await Location().requestPermission();
+                    if (!context.mounted) return;
                     if (newStatus == PermissionStatus.denied) {
                       final router = Routemaster.of(context);
                       await showAlert(

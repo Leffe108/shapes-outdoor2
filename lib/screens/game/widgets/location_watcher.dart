@@ -42,7 +42,9 @@ class _LocationWatcherState extends State<LocationWatcher> {
   }
 
   _startStream() {
-    _stream = onLocationChanged(inBackground: _background);
+    final location = Location();
+    location.enableBackgroundMode(enable: _background);
+    _stream = location.onLocationChanged;
     _streamSubscription = _stream.listen(
       (location) {
         final pos = location.toLatLng();
@@ -82,7 +84,7 @@ class _LocationWatcherState extends State<LocationWatcher> {
           ? 'notification_${nextShape.toString().split('.').last}'
           : 'triangle';
 
-      updateBackgroundNotification(
+      Location().changeNotificationOptions(
         title: 'Collect shapes in background',
         subtitle: 'Go to settings in Shapes Outdoor to disable.',
         color: Theme.of(context).colorScheme.primary,

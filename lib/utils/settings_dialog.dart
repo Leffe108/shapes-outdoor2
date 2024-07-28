@@ -38,15 +38,10 @@ Future<void> showSettingsDialog(
                         if (!await showYesNoDialog(
                           context,
                           const Text('Collect shapes in background?'),
-                          ListView(
-                            shrinkWrap: true,
-                            children: const [
-                              Text(
-                                  'This optional feature allows completing shapes in the game while your phone is locked in your pocket. \n\n'
-                                  'To collect shapes in the background, Shapes Outdoor needs access to your location even when the app is closed or not in use.'),
-                              //  \n\nEnabling this will allow you to walk to a shape with the phone locked and sense a soft vibration when you walk in radius and then a stronger vibration when the shape has been collected.
-                            ],
-                          ),
+                          const Text(
+                              'This optional feature allows completing shapes in the game while your phone is locked in your pocket. \n\n'
+                              'To collect shapes in the background, Shapes Outdoor needs access to your location even when the app is closed or not in use.'),
+                          //  \n\nEnabling this will allow you to walk to a shape with the phone locked and sense a soft vibration when you walk in radius and then a stronger vibration when the shape has been collected.
                           yesButtonText: 'YES',
                           noButtonText: 'ABORT',
                         )) {

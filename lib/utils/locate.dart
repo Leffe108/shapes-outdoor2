@@ -18,14 +18,15 @@ class LocationDataError extends Exception {
 }
 
 Future<LocationData> getUserPosition() async {
-  final status = await requestPermission();
+  final location = Location();
+  final status = await location.requestPermission();
   if (!isGranted(status)) {
     throw PermissionError(status.toString());
   }
 
-  var pos = LocationData();
+  late LocationData pos;
   try {
-    pos = await getLocation();
+    pos = await location.getLocation();
   } catch (e) {
     throw LocationDataError('getLocation exception: $e');
   }
@@ -46,8 +47,6 @@ extension LocationDataToLatLng on LocationData {
 }
 
 bool isGranted(PermissionStatus? value) {
-  return [
-    PermissionStatus.authorizedAlways,
-    PermissionStatus.authorizedWhenInUse
-  ].contains(value);
+  return [PermissionStatus.granted, PermissionStatus.grantedLimited]
+      .contains(value);
 }

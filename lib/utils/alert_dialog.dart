@@ -11,7 +11,7 @@ Future<void> showAlert(BuildContext context, Widget title, Widget message,
         TextButton(
           child: Text(
             buttonText,
-            style: Theme.of(context).textTheme.button,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           onPressed: () {
             Navigator.of(context).pop();
@@ -40,7 +40,7 @@ Future<bool> showYesNoDialog(
         TextButton(
           child: Text(
             yesButtonText,
-            style: Theme.of(context).textTheme.button,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           onPressed: () {
             Navigator.of(context).pop(true);
@@ -49,7 +49,7 @@ Future<bool> showYesNoDialog(
         TextButton(
           child: Text(
             noButtonText,
-            style: Theme.of(context).textTheme.button,
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           onPressed: () {
             Navigator.of(context).pop(false);

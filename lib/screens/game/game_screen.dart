@@ -41,9 +41,9 @@ class GameScreen extends StatelessWidget {
             },
           ),
         ],
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
-      body: Column(children: const [
+      body: const Column(children: [
         Expanded(child: GameMap()),
         LocationWatcher(),
         GameStatus(),

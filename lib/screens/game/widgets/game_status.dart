@@ -13,7 +13,7 @@ class GameStatus extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).scaffoldBackgroundColor,
         boxShadow: const [
           BoxShadow(
             blurRadius: 20,
