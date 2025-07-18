@@ -95,9 +95,9 @@ class _GameMenuState extends State<GameMenu> {
       );
     }
     // Show game menu
-    return Column(
+    return const Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
+      children: [
         NewGameButton(Text('Mini'), GameLevel.mini, key: GameMenu.miniKey),
         SizedBox(
           height: 20,

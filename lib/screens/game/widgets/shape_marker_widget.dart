@@ -32,8 +32,8 @@ class ShapeMarkerWidget extends StatelessWidget {
           style: TextStyle(color: color, fontSize: 20, shadows: [
             Shadow(
               color: Theme.of(context).brightness == Brightness.light
-                  ? Colors.black.withOpacity(0.4)
-                  : Colors.white.withOpacity(0.4),
+                  ? Colors.black.withValues(alpha: 0.4)
+                  : Colors.white.withValues(alpha: 0.4),
               blurRadius: 20,
               offset: const Offset(0, 0),
             ),

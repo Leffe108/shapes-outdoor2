@@ -14,8 +14,6 @@ class GameMap extends StatefulWidget {
   State<GameMap> createState() => _GameMapState();
 }
 
-const _zoom = 14.0;
-
 class _GameMapState extends State<GameMap> {
   late final MapController mapController;
   bool mapReady = false;
@@ -110,8 +108,8 @@ class _GameMapState extends State<GameMap> {
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).brightness == Brightness.light
-                    ? Colors.white.withOpacity(0.4)
-                    : Colors.black.withOpacity(0.4),
+                    ? Colors.white.withValues(alpha: 0.4)
+                    : Colors.black.withValues(alpha: 0.4),
                 borderRadius:
                     const BorderRadius.only(topLeft: Radius.circular(8.0)),
               ),

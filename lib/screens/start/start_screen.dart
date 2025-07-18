@@ -67,8 +67,8 @@ class StartScreen extends StatelessWidget {
                                   BoxShadow(
                                     color: Theme.of(context).brightness ==
                                             Brightness.light
-                                        ? Colors.black.withOpacity(0.10)
-                                        : Colors.black.withOpacity(0.15),
+                                        ? Colors.black.withValues(alpha: 0.10)
+                                        : Colors.black.withValues(alpha: 0.15),
                                     offset: const Offset(2, 2),
                                     blurRadius: 5,
                                     spreadRadius: 5,

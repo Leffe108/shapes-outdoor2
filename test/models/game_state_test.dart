@@ -9,13 +9,13 @@ void main() {
     final vibrateSetting = ValueNotifier<bool>(false);
     final vibration = Vibration(setting: vibrateSetting);
     final state = GameState(vibration: vibration);
-    state.newGameFromLevel(LatLng(0, 0), GameLevel.mini);
+    state.newGameFromLevel(const LatLng(0, 0), GameLevel.mini);
     expect(state.points.length, greaterThan(0));
 
-    state.newGame(LatLng(0, 0), 3, 100, 100);
+    state.newGame(const LatLng(0, 0), 3, 100, 100);
     expect(state.points.length, 3);
     expect(state.shapesToCollect.length, 3);
-    state.playerPos = LatLng(0, 0);
+    state.playerPos = const LatLng(0, 0);
     expect(state.closestShapeDistanceM, 100.0);
     expect(state.inRange, false);
     expect(state.nextShape, isNotNull);

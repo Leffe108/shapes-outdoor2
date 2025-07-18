@@ -32,7 +32,7 @@ dependencies:
 
   provider: ^6.0.3
   flutter_map: ^7.0.2
-  location: 5.0.0
+  location: ^7.0.0
   routemaster: ^1.0.0
   turf: ^0.0.8
   latlong2: ^0.9.1
@@ -54,6 +54,8 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.1
+  location_platform_interface: any
+  plugin_platform_interface: any
 
 flutter_icons:
   android: true

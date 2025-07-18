@@ -48,8 +48,9 @@ class _LocationWatcherState extends State<LocationWatcher> {
     _streamSubscription = _stream.listen(
       (location) {
         final pos = location.toLatLng();
-        if (pos != null) {
-          final state = Provider.of<GameState>(context, listen: false);
+        final ctx = context;
+        if (pos != null && ctx.mounted) {
+          final state = Provider.of<GameState>(ctx, listen: false);
           state.playerPos = pos;
         }
       },

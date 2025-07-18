@@ -15,8 +15,8 @@ class PlayerMarkerWidget extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Theme.of(context).brightness == Brightness.light
-                  ? Colors.black.withOpacity(0.07)
-                  : Colors.white.withOpacity(0.10),
+                  ? Colors.black.withValues(alpha: 0.07)
+                  : Colors.white.withValues(alpha: 0.10),
               blurRadius: 5,
               spreadRadius: 5,
             ),
