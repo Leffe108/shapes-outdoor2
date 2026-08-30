@@ -5,12 +5,7 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shapes_outdoor/models/vibration.dart';
 
-enum GameLevel {
-  mini,
-  neardy,
-  medium,
-  sprawl,
-}
+enum GameLevel { mini, neardy, medium, sprawl }
 
 enum ShapeType {
   triangle,
@@ -96,8 +91,6 @@ class GameState extends ChangeNotifier {
       case GameLevel.sprawl:
         newGame(center, 9, 250, 2500);
         break;
-      default:
-        throw Exception('Unknown level');
     }
   }
 
@@ -119,16 +112,14 @@ class GameState extends ChangeNotifier {
     var bearing = Random().nextDouble() * 360.0 - 180.0;
 
     for (var i = 0; i < n; i++) {
-      final range = minRangeM +
+      final range =
+          minRangeM +
           ((maxRangeM - minRangeM) > 0
               ? Random().nextInt(maxRangeM - minRangeM)
               : 0);
       final pos = const Distance().offset(center, range, bearing);
       final shape = shapes[i % shapes.length];
-      _points.add(ShapePoint(
-        shape: shapes[i % shapes.length],
-        pos: pos,
-      ));
+      _points.add(ShapePoint(shape: shapes[i % shapes.length], pos: pos));
       _shapes.add(shape);
 
       bearing += 360 / n;
@@ -173,8 +164,8 @@ class GameState extends ChangeNotifier {
   Duration? get gameDuration => _gameStart == null
       ? null
       : (_gameEnd == null
-          ? DateTime.now().difference(_gameStart!)
-          : _gameEnd!.difference(_gameStart!));
+            ? DateTime.now().difference(_gameStart!)
+            : _gameEnd!.difference(_gameStart!));
 
   /// Set the current location of the player
   set playerPos(LatLng? pos) {
@@ -190,8 +181,9 @@ class GameState extends ChangeNotifier {
         _closestPoint = closestPoint;
         notify = true;
       }
-      var inRange =
-          _playerPos != null ? closestPoint.distM < collectRangeMeters : false;
+      var inRange = _playerPos != null
+          ? closestPoint.distM < collectRangeMeters
+          : false;
       var now = DateTime.now();
       if (inRange &&
           _enterPoint != null &&

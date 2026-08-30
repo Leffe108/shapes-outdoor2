@@ -4,18 +4,10 @@ import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
 // Was not granted permission to location services
-class PermissionError extends Exception {
-  factory PermissionError(String message) {
-    return PermissionError(message);
-  }
-}
+class PermissionError(final String message) implements Exception;
 
-// An unknown error occured while receiving position
-class LocationDataError extends Exception {
-  factory LocationDataError(String message) {
-    return LocationDataError(message);
-  }
-}
+// An unknown error occurred while receiving position
+class LocationDataError(final String message) implements Exception;
 
 Future<LocationData> getUserPosition() async {
   final location = Location();
@@ -40,6 +32,8 @@ extension LocationDataToLatLng on LocationData {
 }
 
 bool isGranted(PermissionStatus? value) {
-  return [PermissionStatus.granted, PermissionStatus.grantedLimited]
-      .contains(value);
+  return [
+    PermissionStatus.granted,
+    PermissionStatus.grantedLimited,
+  ].contains(value);
 }
