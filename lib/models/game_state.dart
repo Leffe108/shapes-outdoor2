@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_vibrate/flutter_vibrate.dart';
+import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shapes_outdoor/models/vibration.dart';
 
@@ -202,12 +202,12 @@ class GameState extends ChangeNotifier {
       } else if (inRange && _enterPoint == null) {
         // Arrived in range => set enter time
         _enterPoint = now;
-        vibration.vibrate(FeedbackType.medium);
+        vibration.vibrate(HapticsType.medium);
         notify = true;
       } else if (!inRange && _enterPoint != null) {
         // Went out of range => reset enter time
         _enterPoint = null;
-        vibration.vibrate(FeedbackType.light);
+        vibration.vibrate(HapticsType.light);
         notify = true;
       }
     }
@@ -248,7 +248,7 @@ class GameState extends ChangeNotifier {
       _gameEnd = DateTime.now();
     }
 
-    vibration.vibrate(FeedbackType.heavy);
+    vibration.vibrate(HapticsType.heavy);
   }
 
   /// Get the closest point of give shape

@@ -8,7 +8,7 @@ import 'package:shapes_outdoor/screens/game/widgets/location_watcher.dart';
 import 'package:shapes_outdoor/utils/settings_dialog.dart';
 
 class GameScreen extends StatelessWidget {
-  const GameScreen({Key? key}) : super(key: key);
+  const GameScreen({super.key});
 
   static const titleKey = Key('GAME_TITLE');
   static const closeKey = Key('GAME_CLOSE');
@@ -43,11 +43,13 @@ class GameScreen extends StatelessWidget {
         ],
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
-      body: const Column(children: [
-        Expanded(child: GameMap()),
-        LocationWatcher(),
-        GameStatus(),
-      ]),
+      body: const SafeArea(
+        child: Column(children: [
+          Expanded(child: GameMap()),
+          LocationWatcher(),
+          GameStatus(),
+        ]),
+      ),
     );
   }
 }

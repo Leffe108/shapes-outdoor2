@@ -22,7 +22,7 @@ ThemeData buildAppTheme({required bool dark}) {
 }
 
 ThemeData _light() {
-  final bgColor = Colors.green[200];
+  final bgColor = Colors.green[220];
 
   return ThemeData(
     brightness: Brightness.light,

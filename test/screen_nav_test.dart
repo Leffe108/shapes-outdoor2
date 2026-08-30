@@ -5,6 +5,7 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -161,29 +162,33 @@ class MockLocationPlatform with MockPlatformInterfaceMixin implements Location {
   }
 
   @override
-  Future<AndroidNotificationData?> changeNotificationOptions({
-    String? channelName,
-    String? title,
-    String? iconName,
-    String? subtitle,
-    String? description,
-    Color? color,
-    bool? onTapBringToFront,
-  }) async {
+  Future<AndroidNotificationData?> changeNotificationOptions(
+      {String? channelName,
+      String? title,
+      String? iconName,
+      String? imageName,
+      Uint8List? iconBytes,
+      Uint8List? imageBytes,
+      String? subtitle,
+      String? description,
+      Color? color,
+      bool? onTapBringToFront}) async {
     return null;
   }
 
   @override
-  Future<bool> changeSettings({
-    LocationAccuracy? accuracy,
-    int? interval,
-    double? distanceFilter,
-  }) async {
+  Future<bool> changeSettings(
+      {LocationAccuracy? accuracy = LocationAccuracy.high,
+      int? interval = 1000,
+      double? distanceFilter = 0,
+      bool? pausesLocationUpdatesAutomatically = true,
+      int? backgroundInterval}) async {
     return true;
   }
 
   @override
-  Future<bool> enableBackgroundMode({bool? enable}) async {
+  Future<bool> enableBackgroundMode(
+      {bool? enable = true, bool requireBackgroundPermission = true}) async {
     return true;
   }
 
@@ -199,6 +204,16 @@ class MockLocationPlatform with MockPlatformInterfaceMixin implements Location {
 
   @override
   Future<bool> serviceEnabled() async {
+    return true;
+  }
+
+  @override
+  Future<LocationData?> getLastKnownLocation() async {
+    return null;
+  }
+
+  @override
+  Future<bool> isBackgroundPermissionGranted() async {
     return true;
   }
 }

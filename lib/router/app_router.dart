@@ -8,17 +8,24 @@ import 'package:shapes_outdoor/screens/start_location/start_location_screen.dart
 
 RouterDelegate<Object> appRouter() {
   return RoutemasterDelegate(
-    routesBuilder: (context) => RouteMap(routes: {
-      '/': (routeData) => const MaterialPage(child: StartScreen()),
-      '/new-game': (routeData) => const MaterialPage(child: NewGameScreen()),
-      '/new-game/:level/start-location': (routeData) {
-        final levelStr = routeData.pathParameters['level'];
-        final level = GameLevel.values
-            .where((lvl) => lvl.toString().split('.').last == levelStr)
-            .first;
-        return MaterialPage(child: StartLocationScreen(level));
-      },
-      '/new-game/game': (routeData) => const MaterialPage(child: GameScreen()),
-    }),
+    routesBuilder: (context) => RouteMap(
+        routes: {
+          '/': (routeData) => const MaterialPage(child: StartScreen()),
+          '/new-game': (routeData) =>
+              const MaterialPage(child: NewGameScreen()),
+          '/new-game/:level/start-location': (routeData) {
+            final levelStr = routeData.pathParameters['level'];
+            final level = GameLevel.values
+                .where((lvl) => lvl.toString().split('.').last == levelStr)
+                .first;
+            return MaterialPage(child: StartLocationScreen(level));
+          },
+          '/new-game/game': (routeData) =>
+              const MaterialPage(child: GameScreen()),
+        },
+        onUnknownRoute: (path) {
+          print('Unknown route: $path');
+          return const RouteSettings(name: '/');
+        }),
   );
 }

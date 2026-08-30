@@ -56,6 +56,7 @@ class _StartLocationScreenState extends State<StartLocationScreen> {
         backgroundColor: Theme.of(context).colorScheme.surface,
         shadowColor: Colors.transparent,
       ),
+      backgroundColor: Theme.of(context).colorScheme.surface,
       body: Container(
         color: Theme.of(context).colorScheme.surface,
         padding: const EdgeInsets.only(bottom: 20.0),

@@ -30,19 +30,12 @@ Future<LocationData> getUserPosition() async {
   } catch (e) {
     throw LocationDataError('getLocation exception: $e');
   }
-  if (pos.latitude != null && pos.longitude != null) {
-    return pos;
-  }
-
-  throw LocationDataError('null lat/lon');
+  return pos;
 }
 
 extension LocationDataToLatLng on LocationData {
   LatLng? toLatLng() {
-    if (this.latitude != null && this.longitude != null) {
-      return LatLng(latitude!, longitude!);
-    }
-    return null;
+    return LatLng(latitude, longitude);
   }
 }
 
