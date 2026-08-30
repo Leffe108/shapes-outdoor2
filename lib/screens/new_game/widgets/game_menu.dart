@@ -9,7 +9,7 @@ import 'package:shapes_outdoor/screens/new_game/widgets/new_game_button.dart';
 import '../../../widgets/stadium_button.dart';
 
 class GameMenu extends StatefulWidget {
-  const GameMenu({Key? key}) : super(key: key);
+  const GameMenu({super.key});
 
   static const miniKey = Key('NEW_GAME_MINI');
   static const abortGameKey = Key('NEW_GAME_ABORT_GAME');
@@ -68,9 +68,7 @@ class _GameMenuState extends State<GameMenu> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text('You have a game in progress'),
-          const SizedBox(
-            height: 30,
-          ),
+          const SizedBox(height: 30),
           StadiumButton(
             text: const Text('Resume'),
             onPressed: () {
@@ -78,9 +76,7 @@ class _GameMenuState extends State<GameMenu> {
             },
             key: GameMenu.resumeGameKey,
           ),
-          const SizedBox(
-            height: 50,
-          ),
+          const SizedBox(height: 50),
           StadiumButton(
             text: const Text('Abort'),
             primary: false,
@@ -99,17 +95,11 @@ class _GameMenuState extends State<GameMenu> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         NewGameButton(Text('Mini'), GameLevel.mini, key: GameMenu.miniKey),
-        SizedBox(
-          height: 20,
-        ),
-        NewGameButton(Text('Nearby'), GameLevel.neardy),
-        SizedBox(
-          height: 20,
-        ),
+        SizedBox(height: 20),
+        NewGameButton(Text('Nearby'), GameLevel.nearby),
+        SizedBox(height: 20),
         NewGameButton(Text(' Medium '), GameLevel.medium),
-        SizedBox(
-          height: 20,
-        ),
+        SizedBox(height: 20),
         NewGameButton(Text('         Sprawl         '), GameLevel.sprawl),
       ],
     );

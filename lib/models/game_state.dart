@@ -5,7 +5,7 @@ import 'package:haptic_feedback/haptic_feedback.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:shapes_outdoor/models/vibration.dart';
 
-enum GameLevel { mini, neardy, medium, sprawl }
+enum GameLevel { mini, nearby, medium, sprawl }
 
 enum ShapeType {
   triangle,
@@ -82,7 +82,7 @@ class GameState extends ChangeNotifier {
       case GameLevel.mini:
         newGame(center, 2, 150, 150);
         break;
-      case GameLevel.neardy:
+      case GameLevel.nearby:
         newGame(center, 5, 200, 200);
         break;
       case GameLevel.medium:
